@@ -1,8 +1,8 @@
-import 'package:finpay_app/DashboardPage.dart';
-import 'package:finpay_app/FadeAnimation.dart';
-import 'package:finpay_app/Loading.dart';
-import 'package:finpay_app/LoginPage.dart';
-import 'package:finpay_app/ThemeColor.dart';
+import 'package:FinPay/DashboardPage.dart';
+import 'package:FinPay/FadeAnimation.dart';
+import 'package:FinPay/Loading.dart';
+import 'package:FinPay/LoginPage.dart';
+import 'package:FinPay/ThemeColor.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -15,9 +15,12 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
 
   final GlobalKey<FormState>_registerFormKey = GlobalKey<FormState>();
-  TextEditingController ufullnameController = new TextEditingController();
-  TextEditingController uemailController = new TextEditingController();
+  TextEditingController ufirstnameController = new TextEditingController();
+  TextEditingController ulastnameController = new TextEditingController();
+  TextEditingController uusernameController = new TextEditingController();
   TextEditingController upasswordController = new TextEditingController();
+  TextEditingController uemailController = new TextEditingController();
+  TextEditingController umobilenoController = new TextEditingController();
 
   bool loading = false;
 
@@ -138,7 +141,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Column(
                       children: <Widget>[
                         FadeAnimation(0.6, TextFormField(
-                          controller: ufullnameController,
+                          controller: ufirstnameController,
                           // validator: (value) {
                           //   if (value.length < 3 || value.isEmpty) {
                           //     return 'Enter Full Name';
@@ -147,7 +150,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           // },
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
-                            labelText: 'Full Name',
+                            labelText: 'First Name',
                             icon: Icon(
                                 Icons.person
                             ),
@@ -167,20 +170,64 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),),
                         SizedBox(height: 20.0,),
                         FadeAnimation(0.8, TextFormField(
-                          controller: uemailController,
-                          // validator: emailValidator,
-                          keyboardType: TextInputType.emailAddress,
+                          controller: ulastnameController,
+                          // validator: (value) {
+                          //   if (value.length < 3 || value.isEmpty) {
+                          //     return 'Enter Full Name';
+                          //   }
+                          //   return null;
+                          // },
+                          keyboardType: TextInputType.text,
                           decoration: InputDecoration(
-                            labelText: "Email",
-                            icon: Icon(Icons.email),
+                            labelText: 'Last Name',
+                            icon: Icon(
+                                Icons.person
+                            ),
                             focusColor: Colors.black87,
                             contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                            enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey,),),
-                            border: OutlineInputBorder(borderSide: BorderSide(color: Colors.white70),),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.white70
+                              ),
+                            ),
                           ),
                         ),),
                         SizedBox(height: 20.0,),
-                        FadeAnimation(0.9, TextFormField(
+                        FadeAnimation(1.0, TextFormField(
+                          controller: uusernameController,
+                          // validator: (value) {
+                          //   if (value.length < 3 || value.isEmpty) {
+                          //     return 'Enter Full Name';
+                          //   }
+                          //   return null;
+                          // },
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            labelText: 'Usermame',
+                            icon: Icon(
+                                Icons.abc
+                            ),
+                            focusColor: Colors.black87,
+                            contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.white70
+                              ),
+                            ),
+                          ),
+                        ),),
+                        SizedBox(height: 20.0,),
+                        FadeAnimation(1.2, TextFormField(
                           controller: upasswordController,
                           // validator: (value) {
                           //   if (value.length < 6 || value.isEmpty) {
@@ -212,12 +259,56 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             ),
                           ),
-                        ),
-                        ),
+                        ),),
+                        SizedBox(height: 20.0,),
+                        FadeAnimation(1.4, TextFormField(
+                          controller: uemailController,
+                          // validator: emailValidator,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            labelText: "Email",
+                            icon: Icon(Icons.email),
+                            focusColor: Colors.black87,
+                            contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                            enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey,),),
+                            border: OutlineInputBorder(borderSide: BorderSide(color: Colors.white70),),
+                          ),
+                        ),),
+                        SizedBox(height: 20.0,),
+                        FadeAnimation(1.6, TextFormField(
+                          controller: umobilenoController,
+                          // validator: (value) {
+                          //   if (value.length < 6 || value.isEmpty) {
+                          //     return 'Password must be longer than 6 characters';
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
+                          keyboardType: TextInputType.phone,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            labelText: "Mobile Number",
+                            icon: Icon(
+                                Icons.phone
+                            ),
+                            focusColor: Colors.black87,
+                            contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.white70
+                              ),
+                            ),
+                          ),
+                        ),),
                         SizedBox(height: 30.0,),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 40),
-                          child: FadeAnimation(1.0,
+                          child: FadeAnimation(1.8,
                               Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(50),
@@ -254,7 +345,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 // SizedBox(height: 10.0,),
                 // Text(error, style: TextStyle(color: Colors.red, fontSize: 14),),
                 SizedBox(height: 30.0,),
-                FadeAnimation(1.1,
+                FadeAnimation(2.0,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -283,7 +374,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ],
                     )
                 ),
-                SizedBox(height: 20.0,),
+                SizedBox(height: 50.0,),
               ],
             ),
           )

@@ -1,7 +1,6 @@
-import 'package:finpay_app/ThemeColor.dart';
+import 'package:FinPay/ThemeColor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:finpay_app/ThemeColor.dart';
 
 class Loading extends StatelessWidget {
   @override

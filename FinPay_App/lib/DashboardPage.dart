@@ -1,8 +1,9 @@
+import 'package:FinPay/DashboardScreens/HomePage.dart';
+import 'package:FinPay/DashboardScreens/MFACreationPage.dart';
+import 'package:FinPay/DashboardScreens/PaymentsPage.dart';
+import 'package:FinPay/DashboardScreens/ProfilePage.dart';
+import 'package:FinPay/ThemeColor.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:finpay_app/DashboardScreens/HomePage.dart';
-import 'package:finpay_app/DashboardScreens/PaymentsPage.dart';
-import 'package:finpay_app/DashboardScreens/ProfilePage.dart';
-import 'package:finpay_app/ThemeColor.dart';
 import 'package:flutter/material.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -27,8 +28,10 @@ class _DashboardPageState extends State<DashboardPage> {
         return PaymentsPage();
         break;
       case 2:
-        return ProfilePage();
+        return MFACreationPage();
         break;
+      case 3:
+        return ProfilePage();
       default:
         return new Container(
           child: new Center(
@@ -50,9 +53,10 @@ class _DashboardPageState extends State<DashboardPage> {
           backgroundColor: Colors.white,
           buttonBackgroundColor: kYellowColor,
           items: <Widget>[
-            Icon(Icons.home, size: 30, color: Colors.black,),
-            Icon(Icons.monetization_on, size: 30, color: Colors.black,),
-            Icon(Icons.person, size: 30, color: Colors.black,),
+            Icon(Icons.home, color: Colors.black,),
+            Icon(Icons.attach_money, color: Colors.black,),
+            Icon(Icons.verified_user_rounded, color: Colors.black,),
+            Icon(Icons.person, color: Colors.black,),
           ],
           animationDuration: Duration(milliseconds: 400),
           onTap: (int tappedIndex) {

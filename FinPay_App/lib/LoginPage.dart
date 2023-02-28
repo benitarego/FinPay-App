@@ -1,8 +1,8 @@
-import 'package:finpay_app/DashboardPage.dart';
-import 'package:finpay_app/FadeAnimation.dart';
-import 'package:finpay_app/Loading.dart';
-import 'package:finpay_app/RegisterPage.dart';
-import 'package:finpay_app/ThemeColor.dart';
+import 'package:FinPay/DashboardPage.dart';
+import 'package:FinPay/FadeAnimation.dart';
+import 'package:FinPay/Loading.dart';
+import 'package:FinPay/RegisterPage.dart';
+import 'package:FinPay/ThemeColor.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {

@@ -1,5 +1,4 @@
-import 'package:finpay_app/DashboardPage.dart';
-import 'package:finpay_app/RegisterPage.dart';
+import 'package:FinPay/RegisterPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shimmer/shimmer.dart';
