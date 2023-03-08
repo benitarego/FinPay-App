@@ -1,9 +1,9 @@
 import 'package:FinPay/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:FinPay/ThemeColor.dart';
-import 'package:FinPay/DashboardScreens/PaymentTabs/RequestPayment.dart';
-import 'package:FinPay/DashboardScreens/PaymentTabs/SendPayment.dart';
-
+import 'package:FinPay/DashboardScreens/PaymentTabs/DepositMoney.dart';
+import 'package:FinPay/DashboardScreens/PaymentTabs/WithdrawMoney.dart';
+import 'package:FinPay/DashboardScreens/PaymentTabs/P2PTransfer.dart';
 
 class PaymentsPage extends StatefulWidget {
   const PaymentsPage({Key? key}) : super(key: key);
@@ -23,7 +23,7 @@ class _PaymentsPageState extends State<PaymentsPage>  with SingleTickerProviderS
   @override
   void initState() {
     super.initState();
-    _nestedTabController = new TabController(length: 2, vsync: this);
+    _nestedTabController = new TabController(length: 3, vsync: this);
   }
 
   @override
@@ -81,8 +81,9 @@ class _PaymentsPageState extends State<PaymentsPage>  with SingleTickerProviderS
                   unselectedLabelColor: kThemeColor,
                   isScrollable: true,
                   tabs: <Widget>[
-                    Tab(text: 'Send'),
-                    Tab(text: 'Request'),
+                    Tab(text: 'Deposit'),
+                    Tab(text: 'Withdraw'),
+                    Tab(text: 'Peer-to-Peer'),
                   ],
                 ),
                 Container(
@@ -90,8 +91,9 @@ class _PaymentsPageState extends State<PaymentsPage>  with SingleTickerProviderS
                   child: TabBarView(
                     controller: _nestedTabController,
                     children: <Widget>[
-                      SendPayment(),
-                      RequestPayment()
+                      DepositMoney(),
+                      WithdrawMoney(),
+                      P2PTransfer()
                     ],
                   ),
                 )

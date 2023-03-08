@@ -1,14 +1,15 @@
-import 'package:FinPay/Loading.dart';
+import 'package:FinPay/ThemeColor.dart';
 import 'package:flutter/material.dart';
+import 'package:FinPay/Loading.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class ProfileEdit extends StatefulWidget {
+  const ProfileEdit({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ProfileEdit> createState() => _ProfileEditState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ProfileEditState extends State<ProfileEdit> {
 
   bool loading = false;
 
@@ -25,4 +26,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-

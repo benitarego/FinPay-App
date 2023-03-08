@@ -4,15 +4,14 @@ import 'package:FinPay/ThemeColor.dart';
 import 'package:FinPay/FadeAnimation.dart';
 import 'package:FinPay/DashboardScreens/PaymentTabs/TransferSuccess.dart';
 
-class RequestPayment extends StatefulWidget {
-  const RequestPayment({Key? key}) : super(key: key);
+class P2PTransfer extends StatefulWidget {
+  const P2PTransfer({Key? key}) : super(key: key);
 
   @override
-  State<RequestPayment> createState() => _RequestPaymentState();
+  State<P2PTransfer> createState() => _P2PTransferState();
 }
 
-class _RequestPaymentState extends State<RequestPayment> {
-
+class _P2PTransferState extends State<P2PTransfer> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   ScrollController _scrollController = new ScrollController();
   Color _iconColor = Colors.yellow;
