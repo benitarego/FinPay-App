@@ -1,17 +1,17 @@
 import 'package:FinPay/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:FinPay/ThemeColor.dart';
-import 'package:FinPay/FadeAnimation.dart';
 import 'package:FinPay/DashboardScreens/PaymentTabs/TransferSuccess.dart';
+import 'package:FinPay/FadeAnimation.dart';
 
-class DepositMoney extends StatefulWidget {
-  const DepositMoney({Key? key}) : super(key: key);
+class FlexCard extends StatefulWidget {
+  const FlexCard({Key? key}) : super(key: key);
 
   @override
-  State<DepositMoney> createState() => _DepositMoneyState();
+  State<FlexCard> createState() => _FlexCardState();
 }
 
-class _DepositMoneyState extends State<DepositMoney> {
+class _FlexCardState extends State<FlexCard> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   ScrollController _scrollController = new ScrollController();
   Color _iconColor = Colors.yellow;

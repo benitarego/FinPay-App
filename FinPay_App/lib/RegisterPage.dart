@@ -317,10 +317,60 @@ class _RegisterPageState extends State<RegisterPage> {
                                   minWidth: 180,
                                   height: 50,
                                   onPressed: () {
-                                    Navigator.pushReplacement(
-                                      context, MaterialPageRoute(
-                                      builder: (context) => DashboardPage())
-                                    );
+                                    showDialog(context: context, builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Center(child: Text('TERMS OF SERVICE', style: TextStyle(color: kThemeColor, fontWeight: FontWeight.bold),),),
+                                        content: SingleChildScrollView(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: <Widget>[
+                                              SizedBox(height: 10,),
+                                              Text("PAYMENT", style: TextStyle(color: kThemeColor, fontWeight: FontWeight.w600),),
+                                              SizedBox(height: 10,),
+                                              Text("All payments are due upon receipt. If a payment is not received or payment method is declined, he buyer forfeits the ownership of any item purchased. If no payment is received, request sender for payment."),
+                                              SizedBox(height: 30,),
+                                              Text("AUTHORIZED USERS", style: TextStyle(color: kThemeColor, fontWeight: FontWeight.w600),),
+                                              SizedBox(height: 10,),
+                                              Text("All payments are due upon receipt. If a payment is not received or payment method is declined, he buyer forfeits the ownership of any item purchased. If no payment is received, request sender for payment."),
+                                              SizedBox(height: 30,),
+                                              Text("OTHER POLICIES", style: TextStyle(color: kThemeColor, fontWeight: FontWeight.w600),),
+                                              SizedBox(height: 10,),
+                                              Text("All payments are due upon receipt. If a payment is not received or payment method is declined, he buyer forfeits the ownership of any item purchased. If no payment is received, request sender for payment."),
+                                              SizedBox(height: 10,),
+                                            ],
+                                          ),
+                                        ),
+                                        actions: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                            children: <Widget>[
+                                              OutlinedButton(
+                                                  child: Text('CANCEL', style: TextStyle(color: kThemeColor),),
+                                                  style: OutlinedButton.styleFrom(
+                                                    primary: kThemeColor,
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  }
+                                              ),
+                                              OutlinedButton(
+                                                  child: Text('ACCEPT', style: TextStyle(color: Colors.white),),
+                                                  style: OutlinedButton.styleFrom(
+                                                    backgroundColor: kThemeColor,
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.pushReplacement(
+                                                        context, MaterialPageRoute(
+                                                        builder: (context) => DashboardPage())
+                                                    );
+                                                  }
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      );
+                                    });
                                   },
                                   color: kThemeColor,
                                   elevation: 0,

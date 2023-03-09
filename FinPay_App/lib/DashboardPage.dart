@@ -15,6 +15,7 @@ class DashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<DashboardPage> {
 
   int pageIndex = 0;
+  bool loading = false;
 
   Widget _showPage = new HomePage();
 
@@ -43,7 +44,6 @@ class _DashboardPageState extends State<DashboardPage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.white,
         bottomNavigationBar: CurvedNavigationBar(
           height: 50,
           color: kThemeColor,
@@ -51,7 +51,7 @@ class _DashboardPageState extends State<DashboardPage> {
           buttonBackgroundColor: kYellowColor,
           items: <Widget>[
             Icon(Icons.home, color: Colors.black,),
-            Icon(Icons.attach_money, color: Colors.black,),
+            Icon(Icons.attach_money_rounded, color: Colors.black,),
             Icon(Icons.person, color: Colors.black,),
           ],
           animationDuration: Duration(milliseconds: 400),
