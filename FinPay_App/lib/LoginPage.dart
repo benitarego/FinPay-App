@@ -19,6 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController upasswordController = new TextEditingController();
 
   bool loading = false;
+  String? _errorMessage;
 
   @override
   void initState() {
@@ -138,7 +139,16 @@ class _LoginPageState extends State<LoginPage> {
                       children: <Widget>[
                         FadeAnimation(0.8, TextFormField(
                           controller: uemailController,
-                          // validator: emailValidator,
+                          validator: (value) {
+                            // Pattern pattern =
+                            //     r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$';
+                            // RegExp regex = new RegExp(pattern);
+                            if (value!.isEmpty) {
+                              return 'Email format is invalid';
+                            } else {
+                              return null;
+                            };
+                          },
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             labelText: "Email",
@@ -152,13 +162,13 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(height: 20.0,),
                         FadeAnimation(0.9, TextFormField(
                           controller: upasswordController,
-                          // validator: (value) {
-                          //   if (value.length < 6 || value.isEmpty) {
-                          //     return 'Password must be longer than 6 characters';
-                          //   } else {
-                          //     return null;
-                          //   }
-                          // },
+                          validator: (value) {
+                            if (value!.length < 10 || value.isEmpty) {
+                              return 'Password must be longer than 10 characters';
+                            } else {
+                              return null;
+                            }
+                          },
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: true,
                           decoration: InputDecoration(
@@ -221,8 +231,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                // SizedBox(height: 10.0,),
-                // Text(error, style: TextStyle(color: Colors.red, fontSize: 14),),
+                SizedBox(height: 10.0,),
+                Text(_errorMessage ?? "", style: TextStyle(color: Colors.red, fontSize: 14),),
                 SizedBox(height: 30.0,),
                 FadeAnimation(1.1,
                     Row(

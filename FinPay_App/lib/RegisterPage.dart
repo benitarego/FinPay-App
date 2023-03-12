@@ -15,6 +15,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
 
   final GlobalKey<FormState>_registerFormKey = GlobalKey<FormState>();
+
   TextEditingController ufirstnameController = new TextEditingController();
   TextEditingController ulastnameController = new TextEditingController();
   TextEditingController uusernameController = new TextEditingController();
@@ -23,22 +24,49 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController umobilenoController = new TextEditingController();
 
   bool loading = false;
+  String? _errorMessage;
 
   @override
   void initState() {
+    ufirstnameController = TextEditingController()..addListener(clearError);
+    ulastnameController = TextEditingController()..addListener(clearError);
+    uusernameController = TextEditingController()..addListener(clearError);
+    upasswordController = TextEditingController()..addListener(clearError);
+    uemailController = TextEditingController()..addListener(clearError);
+    umobilenoController = TextEditingController()..addListener(clearError);
     super.initState();
   }
 
-  // String emailValidator(String value) {
-  //   Pattern pattern =
-  //       r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$';
-  //   RegExp regex = new RegExp(pattern);
-  //   if (!regex.hasMatch(value)) {
-  //     return 'Email format is invalid';
-  //   } else {
-  //     return null;
-  //   }
-  // }
+  @override
+  void dispose() {
+    ufirstnameController.dispose();
+    ulastnameController.dispose();
+    uusernameController.dispose();
+    upasswordController.dispose();
+    uemailController.dispose();
+    umobilenoController.dispose();
+    super.dispose();
+  }
+
+  void clearError() {
+    if (_errorMessage != null) {
+      setState(() {
+        // Reset error message when user starts typing
+        _errorMessage = null;
+      });
+    }
+  }
+
+  String emailValidator(String value) {
+    // Pattern pattern =
+    //     r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$';
+    RegExp regex = new RegExp(r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$');
+    if (!regex.hasMatch(value) || value.isEmpty) {
+      return 'Email format is invalid';
+    } else {
+      return "";
+    }
+  }
 
   // void register() {
   //   if (_registerFormKey.currentState.validate()) {
@@ -140,14 +168,15 @@ class _RegisterPageState extends State<RegisterPage> {
                     padding: EdgeInsets.symmetric(horizontal: 40),
                     child: Column(
                       children: <Widget>[
+                        // loginField(uemailController, labelText: "Email", hintText: "Enter valid email like abc@gmail.com"),
                         FadeAnimation(0.6, TextFormField(
                           controller: ufirstnameController,
-                          // validator: (value) {
-                          //   if (value.length < 3 || value.isEmpty) {
-                          //     return 'Enter Full Name';
-                          //   }
-                          //   return null;
-                          // },
+                          validator: (value) {
+                            if (value != null && value.isEmpty) {
+                              return 'Enter First Name';
+                            }
+                            return null;
+                          },
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             labelText: 'First Name',
@@ -171,12 +200,12 @@ class _RegisterPageState extends State<RegisterPage> {
                         SizedBox(height: 20.0,),
                         FadeAnimation(0.8, TextFormField(
                           controller: ulastnameController,
-                          // validator: (value) {
-                          //   if (value.length < 3 || value.isEmpty) {
-                          //     return 'Enter Full Name';
-                          //   }
-                          //   return null;
-                          // },
+                          validator: (value) {
+                            if (value != null && value.isEmpty) {
+                              return 'Enter Last Name';
+                            }
+                            return null;
+                          },
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             labelText: 'Last Name',
@@ -200,12 +229,12 @@ class _RegisterPageState extends State<RegisterPage> {
                         SizedBox(height: 20.0,),
                         FadeAnimation(1.0, TextFormField(
                           controller: uusernameController,
-                          // validator: (value) {
-                          //   if (value.length < 3 || value.isEmpty) {
-                          //     return 'Enter Full Name';
-                          //   }
-                          //   return null;
-                          // },
+                          validator: (value) {
+                            if (value != null && value.isEmpty) {
+                              return 'Enter User Name';
+                            }
+                            return null;
+                          },
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             labelText: 'Usermame',
@@ -229,13 +258,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         SizedBox(height: 20.0,),
                         FadeAnimation(1.2, TextFormField(
                           controller: upasswordController,
-                          // validator: (value) {
-                          //   if (value.length < 6 || value.isEmpty) {
-                          //     return 'Password must be longer than 6 characters';
-                          //   } else {
-                          //     return null;
-                          //   }
-                          // },
+                          validator: (value) {
+                            if (value!.length < 10 || value.isEmpty) {
+                              return 'Password must be longer than 10 characters';
+                            } else {
+                              return null;
+                            }
+                          },
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: true,
                           decoration: InputDecoration(
@@ -263,7 +292,16 @@ class _RegisterPageState extends State<RegisterPage> {
                         SizedBox(height: 20.0,),
                         FadeAnimation(1.4, TextFormField(
                           controller: uemailController,
-                          // validator: emailValidator,
+                          validator: (value) {
+                            // Pattern pattern =
+                            //     r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$';
+                            // RegExp regex = new RegExp(pattern);
+                            if (value!.isEmpty) {
+                              return 'Email format is invalid';
+                            } else {
+                              return null;
+                            };
+                          },
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             labelText: "Email",
@@ -392,8 +430,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
-                // SizedBox(height: 10.0,),
-                // Text(error, style: TextStyle(color: Colors.red, fontSize: 14),),
+                SizedBox(height: 10.0,),
+                Text(_errorMessage ?? "", style: TextStyle(color: Colors.red, fontSize: 14),),
                 SizedBox(height: 30.0,),
                 FadeAnimation(2.0,
                     Row(
