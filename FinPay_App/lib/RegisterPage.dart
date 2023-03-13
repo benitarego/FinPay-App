@@ -168,7 +168,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     padding: EdgeInsets.symmetric(horizontal: 40),
                     child: Column(
                       children: <Widget>[
-                        // loginField(uemailController, labelText: "Email", hintText: "Enter valid email like abc@gmail.com"),
                         FadeAnimation(0.6, TextFormField(
                           controller: ufirstnameController,
                           validator: (value) {

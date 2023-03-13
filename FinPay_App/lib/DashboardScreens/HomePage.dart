@@ -113,9 +113,9 @@ class _HomePageState extends State<HomePage> {
               SizedBox(height: 20,),
               FadeAnimation(0.5, Center(
                 child: Container(
-                  height: 180,
+                  height: 170,
                   width: 370,
-                  padding: EdgeInsets.all(20),
+                  padding: EdgeInsets.only(top: 15, bottom: 10, left: 15, right: 15),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: kThemeColor
@@ -123,18 +123,20 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("Account Balance", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white54),),
+                      Text("Account Balance", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.white54),),
                       SizedBox(height: 15,),
+                      // Amount visible
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Icon(Icons.attach_money, size: 45, color: Colors.white,),
                           SizedBox(width: 0,),
-                          Text("1349", style: TextStyle(fontSize: 40, fontWeight: FontWeight.w400, color: Colors.white),),
+                          Text("0.00", style: TextStyle(fontSize: 40, fontWeight: FontWeight.w400, color: Colors.white),),
                         ],
                       ),
                       SizedBox(height: 20,),
+                      // ADD FUNDS
                       Center(
                         child: GestureDetector(
                           onTap: () {
@@ -243,6 +245,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),),
               SizedBox(height: 20,),
+              // TRANSFER FUNDS, REQUEST FUNDS
               FadeAnimation(0.7, Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -306,6 +309,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),),
               SizedBox(height: 10,),
+              // WITHDRAW FUNDS, GET STATEMENT
               FadeAnimation(0.9, Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -358,10 +362,10 @@ class _HomePageState extends State<HomePage> {
                               borderRadius: BorderRadius.circular(50),
                               color: kYellowColor,
                             ),
-                            child: Icon(Icons.verified_rounded, color: Colors.black,),
+                            child: Icon(Icons.assignment_rounded, color: Colors.black,),
                           ),
                           SizedBox(height: 20,),
-                          Text("Check Funds", style: TextStyle(fontSize: 18),)
+                          Text("Get Statement", style: TextStyle(fontSize: 18),)
                         ],
                       ),
                     ),

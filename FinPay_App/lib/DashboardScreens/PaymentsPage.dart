@@ -80,8 +80,8 @@ class _PaymentsPageState extends State<PaymentsPage>  with SingleTickerProviderS
                   unselectedLabelColor: kThemeColor,
                   isScrollable: true,
                   tabs: <Widget>[
-                    Tab(text: 'Flex'),
-                    Tab(text: 'Others'),
+                    Tab(text: 'FLEX Card'),
+                    Tab(text: 'Other Methods'),
                   ],
                 ),
                 Container(
