@@ -81,6 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
           if(databaseHelper.status){
             _showDialog();
             msgStatus = 'Check username or password';
+            print("error!!");
           }else{
             _showAgreementDialog();
             Navigator.pushReplacement(

@@ -12,18 +12,18 @@ class DatabaseHelper {
   var token;
 
   loginData(String username, password) async {
-    final response = await  http.post('$serverUrl/loginUser',
+    final response = await http.post('$serverUrl/loginUser',
         headers: {
           'Accept':'application/json'
         },
-        body: {
+        body: json.encode({
           "username": "$username",
           "password" : "$password"
-        } ) ;
+        }));
     status = response.body.contains('error');
 
     var data = json.decode(response.body);
-
+    print(data);
     if(status) {
       print('data : ${data["error"]}');
     } else {
@@ -38,19 +38,19 @@ class DatabaseHelper {
         headers: {
           'Accept':'application/json'
         },
-        body: {
+        body: json.encode({
           "firstname": firstname,
           "lastname": lastname,
           "username": username,
           "email": email,
           "password" : password,
           "mobilenumber": mobilenumber
-        }
+        })
     );
 
     status = response.body.contains('error');
     var data = json.decode(response.body);
-
+    print(data);
     if(status){
       print('data : ${data["error"]}');
     }else{

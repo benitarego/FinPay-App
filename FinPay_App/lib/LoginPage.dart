@@ -30,6 +30,27 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
+  _onPressed() {
+    setState(() {
+      // if(uusernameController.text.trim().toLowerCase().isNotEmpty &&
+      //     upasswordController.text.trim().isNotEmpty ){
+      //   databaseHelper.loginData(uusernameController.text.trim().toLowerCase(),
+      //       upasswordController.text.trim()).whenComplete((){
+      //     if(databaseHelper.status){
+      //       _showDialog();
+      //       msgStatus = 'Check email or password';
+      //       print("error!!");
+      //     }else{
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DashboardPage()));
+      //     }
+      //   });
+      // }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return loading ? Loading() : Scaffold(
@@ -158,25 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                                 child: MaterialButton(
                                   minWidth: 180,
                                   height: 50,
-                                  onPressed: () {
-                                    setState(() {
-                                      if(uusernameController.text.trim().toLowerCase().isNotEmpty &&
-                                          upasswordController.text.trim().isNotEmpty ){
-                                        databaseHelper.loginData(uusernameController.text.trim().toLowerCase(),
-                                            upasswordController.text.trim()).whenComplete((){
-                                          if(databaseHelper.status){
-                                            _showDialog();
-                                            msgStatus = 'Check email or password';
-                                          }else{
-                                            Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) => DashboardPage()));
-                                          }
-                                        });
-                                      }
-                                    });
-                                  },
+                                  onPressed: _onPressed,
                                   color: kThemeColor,
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(

@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
+  ScrollController _scrollController = new ScrollController();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool loading = false;
 
@@ -35,6 +35,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return loading ? Loading() : Scaffold(
+        key: _scaffoldKey,
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -89,207 +90,156 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: EdgeInsets.all(20),
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(8.0),
+      body: SingleChildScrollView(
+        child: Column(
+            children: <Widget> [
+              Container(
+                padding: EdgeInsets.all(10),
+                height: MediaQuery.of(context).size.height*2,
                 child: ListView.builder(
-                  itemCount: databaseHelper.data.length == 0 ? 0 : databaseHelper.data.length,
-                  itemBuilder: (ctx, i) => Column(
-                    children: <Widget>[
-                      GestureDetector(
-                        onTap: () {
-                          // showStudent(context, i);
-                        },
-                        child: Card(
-                          color: Colors.grey[400],
-                          child: ListTile(
-                            title: Text(
-                              "${databaseHelper.data[i]["username"]}",
-                              style: TextStyle(fontSize: 20.0),
-                            ),
-                            subtitle: Column(
-                              children: <Widget>[
-                                Text(
-                                  "${databaseHelper.data[i]["email"]}",
-                                  style: TextStyle(fontSize: 15.0),
-                                ),
-                                SizedBox(height: 5,),
-                                Text(
-                                  "${databaseHelper.data[i]["mobilenumber"]}",
-                                  style: TextStyle(fontSize: 15.0),
-                                ),
-                              ],
-                            ),
-                            leading: CircleAvatar(
-                              backgroundImage: AssetImage("assets/image/user.jpeg"),
-                            ),
-                          ),
+                    itemCount: databaseHelper.data.length == 0 ? 0 : databaseHelper.data.length,
+                    itemBuilder: (ctx, i) {
+                      return Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
-                      ),
-                      Divider()
-                    ],
-                  ),
-                ),
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  FadeAnimation(0.1, Text("Welcome to", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600, fontSize: 20),),),
-                  SizedBox(width: 10,),
-                  FadeAnimation(0.3, Row(
-                    children: <Widget>[
-                      Text("Fin", style: TextStyle(color: kThemeColor, fontWeight: FontWeight.bold, fontSize: 40),),
-                      SizedBox(width: 0,),
-                      Text("Pay", style: TextStyle(color: kYellowColor, fontWeight: FontWeight.bold, fontSize: 40),),
-                    ],
-                  ),),
-                ],
-              ),
-              FadeAnimation(0.5, Center(
-                child: Container(
-                  height: 170,
-                  width: 370,
-                  padding: EdgeInsets.only(top: 15, bottom: 10, left: 15, right: 15),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: kThemeColor
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text("Account Balance", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.white54),),
-                      SizedBox(height: 15,),
-                      // Amount visible
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Icon(Icons.attach_money, size: 45, color: Colors.white,),
-                          SizedBox(width: 0,),
-                          Text("0.00", style: TextStyle(fontSize: 40, fontWeight: FontWeight.w400, color: Colors.white),),
-                        ],
-                      ),
-                      SizedBox(height: 20,),
-                      // ADD FUNDS
-                      Center(
-                        child: GestureDetector(
-                          onTap: () {
-                            showModalBottomSheet(
-                                context: context,
-                                builder: (context) {
-                                  return Container(
-                                      height: 900,
-                                      padding: EdgeInsets.only(top: 10, bottom: 30),
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          children: <Widget>[
-                                            ListTile(
-                                              leading: IconButton(
-                                                  icon: Icon(Icons.clear, color: Colors.black,),
-                                                  iconSize: 25,
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                    // _ufullnameController.clear(); _udescController.clear(); _umobilenumberController.clear();
-                                                    // _ulocationController.clear(); _uemailController.clear(); _uwebsiteController.clear();
-                                                    // _ufacebookController.clear(); _ugithubController.clear(); _ulinkedinController.clear();
-                                                    // _uinstagramController.clear(); _utwitterController.clear();
-                                                  }
-                                              ),
-                                              title: Text('Add Funds', style: TextStyle(color: kThemeColor, fontSize: 20),),
-                                              trailing: IconButton(
-                                                  icon: Icon(Icons.check, color: Colors.black,),
-                                                  iconSize: 25,
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                    // if (_ufullnameController.text.isNotEmpty || _udescController.text.isNotEmpty || _umobilenumberController.text.isNotEmpty ||
-                                                    //     _ulocationController.text.isNotEmpty || _uemailController.text.isNotEmpty || _uwebsiteController.text.isNotEmpty ||
-                                                    //     _ufacebookController.text.isNotEmpty || _ugithubController.text.isNotEmpty || _ulinkedinController.text.isNotEmpty ||
-                                                    //     _uinstagramController.text.isNotEmpty || _utwitterController.text.isNotEmpty) {
-                                                    //   Firestore.instance
-                                                    //       .collection("Users")
-                                                    //       .document(currentUser.uid)
-                                                    //       .setData({
-                                                    //     "uid": currentUser.uid,
-                                                    //     "fullname": _ufullnameController.text,
-                                                    //     "udesc": _udescController.text,
-                                                    //     "umobilenumber": _umobilenumberController.text,
-                                                    //     "ulocation": _ulocationController.text,
-                                                    //     "uemail": _uemailController.text,
-                                                    //     "uwebsite": _uwebsiteController.text,
-                                                    //     "ufacebook": _ufacebookController.text,
-                                                    //     "ugithub": _ugithubController.text,
-                                                    //     "ulinkedin": _ulinkedinController.text,
-                                                    //     "uinstagram": _uinstagramController.text,
-                                                    //     "utwitter": _utwitterController.text,
-                                                    //   })
-                                                    //       .then((result) => {
-                                                    //     print('successfully updated'),
-                                                    //     Navigator.pop(context),
-                                                    //   })
-                                                    //       .catchError((e) => {
-                                                    //     print(e),
-                                                    //     showDialog(context: context,
-                                                    //         child: AlertDialog(
-                                                    //           title: Text('Update something'),
-                                                    //         ))
-                                                    //   });
-                                                    //   _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text('Profile updated successfully!')));
-                                                    // }
-                                                  }
-                                              ),
-                                            ),
-                                            SizedBox(height: 10,),
-                                            Padding(
-                                                padding: EdgeInsets.only(top:20, bottom: 20, left: 20, right: 20),
-                                                child: Column(
-                                                  children: <Widget>[
-                                                    TextField(
-                                                      autofocus: true,
-                                                      decoration: InputDecoration(
-                                                        prefixIcon: Icon(Icons.attach_money_rounded, size: 20,),
-                                                        labelText: 'Enter Amount',
-                                                        hintText: 'Ex. 123.45',
-                                                        errorText: isANumber ? null : "Please enter a number",
-                                                      ),
-                                                      keyboardType: TextInputType.number,
-                                                    ),
-                                                  ],
-                                                )
-                                            )
-                                          ],
-                                        ),
-                                      )
-                                  );
-                                }
-                            );
-                          },
-                          child: Container(
-                              height: 40,
-                              width: 350,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: kYellowColor
+                        color: kContainerColor,
+                        elevation: 2.0,
+                        child: Column(
+                          children: <Widget>[
+                            ListTile(
+                              title: Text(
+                                "${databaseHelper.data[i]["username"]}",
+                                style: TextStyle(fontSize: 20.0),
                               ),
-                              child: Center(child: Text('Add Funds', style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white, fontSize: 20),),)
-                          ),
+                              subtitle: Column(
+                                children: <Widget>[
+                                  Text(
+                                    "${databaseHelper.data[i]["email"]}",
+                                    style: TextStyle(fontSize: 15.0),
+                                  ),
+                                  SizedBox(height: 5,),
+                                  Text(
+                                    "${databaseHelper.data[i]["mobilenumber"]}",
+                                    style: TextStyle(fontSize: 15.0),
+                                  ),
+                                ],
+                              ),
+                              leading: CircleAvatar(
+                                backgroundImage: AssetImage(""),
+                              ),
+                            ),
+                            Divider()
+                          ],
                         ),
-                      )
-                    ],
-                  ),
+                      );
+                    }
                 ),
+              ),
+              FadeAnimation(0.1, Text("Welcome to", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600, fontSize: 20),),),
+              SizedBox(width: 10,),
+              FadeAnimation(0.3, Row(
+                children: <Widget>[
+                  Text("Fin", style: TextStyle(color: kThemeColor, fontWeight: FontWeight.bold, fontSize: 40),),
+                  SizedBox(width: 0,),
+                  Text("Pay", style: TextStyle(color: kYellowColor, fontWeight: FontWeight.bold, fontSize: 40),),
+                ],
               ),),
-              SizedBox(height: 20,),
               // TRANSFER FUNDS, REQUEST FUNDS
               FadeAnimation(0.7, Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return Container(
+                                height: 900,
+                                padding: EdgeInsets.only(top: 10, bottom: 30),
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    children: <Widget>[
+                                      ListTile(
+                                        leading: IconButton(
+                                            icon: Icon(Icons.clear, color: Colors.black,),
+                                            iconSize: 25,
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                              // _ufullnameController.clear(); _udescController.clear(); _umobilenumberController.clear();
+                                              // _ulocationController.clear(); _uemailController.clear(); _uwebsiteController.clear();
+                                              // _ufacebookController.clear(); _ugithubController.clear(); _ulinkedinController.clear();
+                                              // _uinstagramController.clear(); _utwitterController.clear();
+                                            }
+                                        ),
+                                        title: Text('Add Funds', style: TextStyle(color: kThemeColor, fontSize: 20),),
+                                        trailing: IconButton(
+                                            icon: Icon(Icons.check, color: Colors.black,),
+                                            iconSize: 25,
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                              // if (_ufullnameController.text.isNotEmpty || _udescController.text.isNotEmpty || _umobilenumberController.text.isNotEmpty ||
+                                              //     _ulocationController.text.isNotEmpty || _uemailController.text.isNotEmpty || _uwebsiteController.text.isNotEmpty ||
+                                              //     _ufacebookController.text.isNotEmpty || _ugithubController.text.isNotEmpty || _ulinkedinController.text.isNotEmpty ||
+                                              //     _uinstagramController.text.isNotEmpty || _utwitterController.text.isNotEmpty) {
+                                              //   Firestore.instance
+                                              //       .collection("Users")
+                                              //       .document(currentUser.uid)
+                                              //       .setData({
+                                              //     "uid": currentUser.uid,
+                                              //     "fullname": _ufullnameController.text,
+                                              //     "udesc": _udescController.text,
+                                              //     "umobilenumber": _umobilenumberController.text,
+                                              //     "ulocation": _ulocationController.text,
+                                              //     "uemail": _uemailController.text,
+                                              //     "uwebsite": _uwebsiteController.text,
+                                              //     "ufacebook": _ufacebookController.text,
+                                              //     "ugithub": _ugithubController.text,
+                                              //     "ulinkedin": _ulinkedinController.text,
+                                              //     "uinstagram": _uinstagramController.text,
+                                              //     "utwitter": _utwitterController.text,
+                                              //   })
+                                              //       .then((result) => {
+                                              //     print('successfully updated'),
+                                              //     Navigator.pop(context),
+                                              //   })
+                                              //       .catchError((e) => {
+                                              //     print(e),
+                                              //     showDialog(context: context,
+                                              //         child: AlertDialog(
+                                              //           title: Text('Update something'),
+                                              //         ))
+                                              //   });
+                                              //   _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text('Profile updated successfully!')));
+                                              // }
+                                            }
+                                        ),
+                                      ),
+                                      SizedBox(height: 10,),
+                                      Padding(
+                                          padding: EdgeInsets.only(top:20, bottom: 20, left: 20, right: 20),
+                                          child: Column(
+                                            children: <Widget>[
+                                              TextField(
+                                                autofocus: true,
+                                                decoration: InputDecoration(
+                                                  prefixIcon: Icon(Icons.attach_money_rounded, size: 20,),
+                                                  labelText: 'Enter Amount',
+                                                  hintText: 'Ex. 123.45',
+                                                  errorText: isANumber ? null : "Please enter a number",
+                                                ),
+                                                keyboardType: TextInputType.number,
+                                              ),
+                                            ],
+                                          )
+                                      )
+                                    ],
+                                  ),
+                                )
+                            );
+                          }
+                      );
+                    },
                     child: Container(
                       padding: EdgeInsets.all(15),
                       height: 110,
@@ -413,8 +363,7 @@ class _HomePageState extends State<HomePage> {
               ),),
               SizedBox(height: 30,),
               FadeAnimation(1.1, Text("For adding, withdrawing, requesting money, your balance will reflect transactions that have not yet been posted to your acount. For checking funds, the balance will reflect the lastest update as per transactions.", style: TextStyle(color: Colors.grey),)),
-            ],
-          ),
+            ]
         ),
       )
     );
