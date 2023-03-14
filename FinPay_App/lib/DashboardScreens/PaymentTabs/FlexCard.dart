@@ -52,123 +52,123 @@ class _FlexCardState extends State<FlexCard> {
                   child: Column(
                     children: [
                       ListTile(
-                        title: Padding(padding: EdgeInsets.only(top: 10), child: Text("FLEX", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),),),
-                        subtitle: Padding(padding: EdgeInsets.only(top: 5, bottom: 5), child: Text("Individual",  style: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w300),),),
+                        title: Padding(padding: EdgeInsets.all(10), child: Text("FLEX", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),),),
+                        subtitle: Padding(padding: EdgeInsets.only(top: 5, bottom: 10, left: 10, right: 10), child: Text("Individual",  style: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w300),),),
                         trailing: Container(
-                          padding: EdgeInsets.only(bottom: 15, top: 10),
+                          padding: EdgeInsets.all(10),
                           // alignment: Alignment.center,
-                          child: Text("USD 0.00", style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w600),),
+                          child: Text("USD 0.00", style: TextStyle(color: Colors.greenAccent, fontSize: 25, fontWeight: FontWeight.w600),)
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.all(10),
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(kYellowColor),
-                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18.0),
-                                  )
-                              )
-                          ),
-                          child: const Text('ADD FUNDS', style: TextStyle(color: Colors.white, fontSize: 16),),
-                          onPressed: () {
-                            showModalBottomSheet(
-                                context: context,
-                                builder: (context) {
-                                  return Container(
-                                      height: 900,
-                                      padding: EdgeInsets.only(top: 10, bottom: 30),
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          children: <Widget>[
-                                            ListTile(
-                                              leading: IconButton(
-                                                  icon: Icon(Icons.clear, color: Colors.black,),
-                                                  iconSize: 25,
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                    // _ufullnameController.clear(); _udescController.clear(); _umobilenumberController.clear();
-                                                    // _ulocationController.clear(); _uemailController.clear(); _uwebsiteController.clear();
-                                                    // _ufacebookController.clear(); _ugithubController.clear(); _ulinkedinController.clear();
-                                                    // _uinstagramController.clear(); _utwitterController.clear();
-                                                  }
-                                              ),
-                                              title: Text('Add Funds', style: TextStyle(color: kThemeColor, fontSize: 20),),
-                                              trailing: IconButton(
-                                                  icon: Icon(Icons.check, color: Colors.black,),
-                                                  iconSize: 25,
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                    // if (_ufullnameController.text.isNotEmpty || _udescController.text.isNotEmpty || _umobilenumberController.text.isNotEmpty ||
-                                                    //     _ulocationController.text.isNotEmpty || _uemailController.text.isNotEmpty || _uwebsiteController.text.isNotEmpty ||
-                                                    //     _ufacebookController.text.isNotEmpty || _ugithubController.text.isNotEmpty || _ulinkedinController.text.isNotEmpty ||
-                                                    //     _uinstagramController.text.isNotEmpty || _utwitterController.text.isNotEmpty) {
-                                                    //   Firestore.instance
-                                                    //       .collection("Users")
-                                                    //       .document(currentUser.uid)
-                                                    //       .setData({
-                                                    //     "uid": currentUser.uid,
-                                                    //     "fullname": _ufullnameController.text,
-                                                    //     "udesc": _udescController.text,
-                                                    //     "umobilenumber": _umobilenumberController.text,
-                                                    //     "ulocation": _ulocationController.text,
-                                                    //     "uemail": _uemailController.text,
-                                                    //     "uwebsite": _uwebsiteController.text,
-                                                    //     "ufacebook": _ufacebookController.text,
-                                                    //     "ugithub": _ugithubController.text,
-                                                    //     "ulinkedin": _ulinkedinController.text,
-                                                    //     "uinstagram": _uinstagramController.text,
-                                                    //     "utwitter": _utwitterController.text,
-                                                    //   })
-                                                    //       .then((result) => {
-                                                    //     print('successfully updated'),
-                                                    //     Navigator.pop(context),
-                                                    //   })
-                                                    //       .catchError((e) => {
-                                                    //     print(e),
-                                                    //     showDialog(context: context,
-                                                    //         child: AlertDialog(
-                                                    //           title: Text('Update something'),
-                                                    //         ))
-                                                    //   });
-                                                    //   _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text('Profile updated successfully!')));
-                                                    // }
-                                                  }
-                                              ),
-                                            ),
-                                            SizedBox(height: 10,),
-                                            Padding(
-                                                padding: EdgeInsets.only(top:20, bottom: 20, left: 20, right: 20),
-                                                child: Column(
-                                                  children: <Widget>[
-                                                    TextField(
-                                                      autofocus: true,
-                                                      decoration: InputDecoration(
-                                                        prefixIcon: Icon(Icons.attach_money_rounded, size: 20,),
-                                                        labelText: 'Enter Amount',
-                                                        hintText: 'Ex. 123.45',
-                                                        errorText: isANumber ? null : "Please enter a number",
-                                                      ),
-                                                      keyboardType: TextInputType.number,
-                                                    ),
-                                                  ],
-                                                )
-                                            )
-                                          ],
-                                        ),
-                                      )
-                                  );
-                                }
-                            );
-                          },
-                        ),
-                      )
+                      // Padding(
+                      //   padding: EdgeInsets.all(10),
+                      //   child: ElevatedButton(
+                      //     style: ButtonStyle(
+                      //         backgroundColor: MaterialStateProperty.all<Color>(kYellowColor),
+                      //         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      //             RoundedRectangleBorder(
+                      //               borderRadius: BorderRadius.circular(18.0),
+                      //             )
+                      //         )
+                      //     ),
+                      //     child: const Text('ADD FUNDS', style: TextStyle(color: Colors.white, fontSize: 16),),
+                      //     onPressed: () {
+                      //       showModalBottomSheet(
+                      //           context: context,
+                      //           builder: (context) {
+                      //             return Container(
+                      //                 height: 900,
+                      //                 padding: EdgeInsets.only(top: 10, bottom: 30),
+                      //                 child: SingleChildScrollView(
+                      //                   child: Column(
+                      //                     children: <Widget>[
+                      //                       ListTile(
+                      //                         leading: IconButton(
+                      //                             icon: Icon(Icons.clear, color: Colors.black,),
+                      //                             iconSize: 25,
+                      //                             onPressed: () {
+                      //                               Navigator.pop(context);
+                      //                               // _ufullnameController.clear(); _udescController.clear(); _umobilenumberController.clear();
+                      //                               // _ulocationController.clear(); _uemailController.clear(); _uwebsiteController.clear();
+                      //                               // _ufacebookController.clear(); _ugithubController.clear(); _ulinkedinController.clear();
+                      //                               // _uinstagramController.clear(); _utwitterController.clear();
+                      //                             }
+                      //                         ),
+                      //                         title: Text('Add Funds', style: TextStyle(color: kThemeColor, fontSize: 20),),
+                      //                         trailing: IconButton(
+                      //                             icon: Icon(Icons.check, color: Colors.black,),
+                      //                             iconSize: 25,
+                      //                             onPressed: () {
+                      //                               Navigator.pop(context);
+                      //                               // if (_ufullnameController.text.isNotEmpty || _udescController.text.isNotEmpty || _umobilenumberController.text.isNotEmpty ||
+                      //                               //     _ulocationController.text.isNotEmpty || _uemailController.text.isNotEmpty || _uwebsiteController.text.isNotEmpty ||
+                      //                               //     _ufacebookController.text.isNotEmpty || _ugithubController.text.isNotEmpty || _ulinkedinController.text.isNotEmpty ||
+                      //                               //     _uinstagramController.text.isNotEmpty || _utwitterController.text.isNotEmpty) {
+                      //                               //   Firestore.instance
+                      //                               //       .collection("Users")
+                      //                               //       .document(currentUser.uid)
+                      //                               //       .setData({
+                      //                               //     "uid": currentUser.uid,
+                      //                               //     "fullname": _ufullnameController.text,
+                      //                               //     "udesc": _udescController.text,
+                      //                               //     "umobilenumber": _umobilenumberController.text,
+                      //                               //     "ulocation": _ulocationController.text,
+                      //                               //     "uemail": _uemailController.text,
+                      //                               //     "uwebsite": _uwebsiteController.text,
+                      //                               //     "ufacebook": _ufacebookController.text,
+                      //                               //     "ugithub": _ugithubController.text,
+                      //                               //     "ulinkedin": _ulinkedinController.text,
+                      //                               //     "uinstagram": _uinstagramController.text,
+                      //                               //     "utwitter": _utwitterController.text,
+                      //                               //   })
+                      //                               //       .then((result) => {
+                      //                               //     print('successfully updated'),
+                      //                               //     Navigator.pop(context),
+                      //                               //   })
+                      //                               //       .catchError((e) => {
+                      //                               //     print(e),
+                      //                               //     showDialog(context: context,
+                      //                               //         child: AlertDialog(
+                      //                               //           title: Text('Update something'),
+                      //                               //         ))
+                      //                               //   });
+                      //                               //   _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text('Profile updated successfully!')));
+                      //                               // }
+                      //                             }
+                      //                         ),
+                      //                       ),
+                      //                       SizedBox(height: 10,),
+                      //                       Padding(
+                      //                           padding: EdgeInsets.only(top:20, bottom: 20, left: 20, right: 20),
+                      //                           child: Column(
+                      //                             children: <Widget>[
+                      //                               TextField(
+                      //                                 autofocus: true,
+                      //                                 decoration: InputDecoration(
+                      //                                   prefixIcon: Icon(Icons.attach_money_rounded, size: 20,),
+                      //                                   labelText: 'Enter Amount',
+                      //                                   hintText: 'Ex. 123.45',
+                      //                                   errorText: isANumber ? null : "Please enter a number",
+                      //                                 ),
+                      //                                 keyboardType: TextInputType.number,
+                      //                               ),
+                      //                             ],
+                      //                           )
+                      //                       )
+                      //                     ],
+                      //                   ),
+                      //                 )
+                      //             );
+                      //           }
+                      //       );
+                      //     },
+                      //   ),
+                      // )
                     ],
                   )
               ),),
               SizedBox(height: 20,),
-              // TRANSFER FUNDS, REQUEST FUNDS
+              // Deposit FUNDS, P2P Transfer
               FadeAnimation(0.7, Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -195,11 +195,16 @@ class _FlexCardState extends State<FlexCard> {
                                               // _uinstagramController.clear(); _utwitterController.clear();
                                             }
                                         ),
-                                        title: Text('Add Funds', style: TextStyle(color: kThemeColor, fontSize: 20),),
+                                        title: Text('Deposit Points', style: TextStyle(color: kThemeColor, fontSize: 20),),
                                         trailing: IconButton(
                                             icon: Icon(Icons.check, color: Colors.black,),
                                             iconSize: 25,
                                             onPressed: () {
+                                              final snackBar = SnackBar(
+                                                content: const Text('Points deposited successfully!'),
+                                                duration: Duration(seconds: 2, milliseconds: 500),
+                                              );
+                                              loading ? Loading() : ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                               Navigator.pop(context);
                                               // if (_ufullnameController.text.isNotEmpty || _udescController.text.isNotEmpty || _umobilenumberController.text.isNotEmpty ||
                                               //     _ulocationController.text.isNotEmpty || _uemailController.text.isNotEmpty || _uwebsiteController.text.isNotEmpty ||
@@ -281,10 +286,10 @@ class _FlexCardState extends State<FlexCard> {
                               borderRadius: BorderRadius.circular(50),
                               color: kYellowColor,
                             ),
-                            child: Icon(Icons.check_circle, color: Colors.black,),
+                            child: Icon(Icons.login_rounded, color: Colors.black,),
                           ),
                           SizedBox(height: 20,),
-                          Text("Transfer Funds", style: TextStyle(fontSize: 18),)
+                          Text("Deposit Funds", style: TextStyle(fontSize: 18),)
                         ],
                       ),
                     ),
@@ -313,7 +318,7 @@ class _FlexCardState extends State<FlexCard> {
                                               // _uinstagramController.clear(); _utwitterController.clear();
                                             }
                                         ),
-                                        title: Text('Request Funds', style: TextStyle(color: kThemeColor, fontSize: 20),),
+                                        title: Text('P2P Transfer', style: TextStyle(color: kThemeColor, fontSize: 20),),
                                         trailing: IconButton(
                                             icon: Icon(Icons.check, color: Colors.black,),
                                             iconSize: 25,
@@ -353,6 +358,11 @@ class _FlexCardState extends State<FlexCard> {
                                               //   });
                                               //   _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text('Profile updated successfully!')));
                                               // }
+                                              final snackBar = SnackBar(
+                                                content: const Text('P2P transferred successfully!'),
+                                                duration: Duration(seconds: 2, milliseconds: 500),
+                                              );
+                                              loading ? Loading() : ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                             }
                                         ),
                                       ),
@@ -364,8 +374,18 @@ class _FlexCardState extends State<FlexCard> {
                                               TextField(
                                                 autofocus: true,
                                                 decoration: InputDecoration(
+                                                  prefixIcon: Icon(Icons.person, size: 20,),
+                                                  labelText: 'Enter username of peer',
+                                                  hintText: 'Ex. brego',
+                                                ),
+                                                keyboardType: TextInputType.text,
+                                              ),
+                                              SizedBox(height: 10,),
+                                              TextField(
+                                                autofocus: true,
+                                                decoration: InputDecoration(
                                                   prefixIcon: Icon(Icons.attach_money_rounded, size: 20,),
-                                                  labelText: 'Enter Amount',
+                                                  labelText: 'Enter Amount to be transferred',
                                                   hintText: 'Ex. 123.45',
                                                   errorText: isANumber ? null : "Please enter a number",
                                                 ),
@@ -399,10 +419,10 @@ class _FlexCardState extends State<FlexCard> {
                               borderRadius: BorderRadius.circular(50),
                               color: kYellowColor,
                             ),
-                            child: Icon(Icons.monetization_on, color: Colors.black,),
+                            child: Icon(Icons.published_with_changes_rounded, color: Colors.black,),
                           ),
                           SizedBox(height: 20,),
-                          Text("Request Funds", style: TextStyle(fontSize: 18),)
+                          Text("P2P Transfer", style: TextStyle(fontSize: 18),)
                         ],
                       ),
                     ),
@@ -442,6 +462,11 @@ class _FlexCardState extends State<FlexCard> {
                                             icon: Icon(Icons.check, color: Colors.black,),
                                             iconSize: 25,
                                             onPressed: () {
+                                              final snackBar = SnackBar(
+                                                content: const Text('Funds withdrawed successfully!'),
+                                                duration: Duration(seconds: 2, milliseconds: 500),
+                                              );
+                                              loading ? Loading() : ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                               Navigator.pop(context);
                                               // if (_ufullnameController.text.isNotEmpty || _udescController.text.isNotEmpty || _umobilenumberController.text.isNotEmpty ||
                                               //     _ulocationController.text.isNotEmpty || _uemailController.text.isNotEmpty || _uwebsiteController.text.isNotEmpty ||
@@ -489,7 +514,7 @@ class _FlexCardState extends State<FlexCard> {
                                                 autofocus: true,
                                                 decoration: InputDecoration(
                                                   prefixIcon: Icon(Icons.attach_money_rounded, size: 20,),
-                                                  labelText: 'Enter Amount',
+                                                  labelText: 'Enter Amount to be withdrawed',
                                                   hintText: 'Ex. 123.45',
                                                   errorText: isANumber ? null : "Please enter a number",
                                                 ),
@@ -523,7 +548,7 @@ class _FlexCardState extends State<FlexCard> {
                               borderRadius: BorderRadius.circular(50),
                               color: kYellowColor,
                             ),
-                            child: Icon(Icons.published_with_changes_rounded, color: Colors.black,),
+                            child: Icon(Icons.monetization_on_rounded, color: Colors.black,),
                           ),
                           SizedBox(height: 20,),
                           Text("Withdraw Funds", style: TextStyle(fontSize: 18),)
@@ -651,23 +676,6 @@ class _FlexCardState extends State<FlexCard> {
                   ),
                 ],
               ),),
-              // FadeAnimation(0.7,
-              //   Container(
-              //       color: Colors.white,
-              //       padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 28.0),
-              //       child: Center(
-              //         child: IconButton(
-              //           icon: Icon(Icons.send),
-              //           onPressed: () {
-              //             Navigator.pushReplacement(
-              //                 context,
-              //                 MaterialPageRoute(
-              //                     builder: (context) => TransferSuccess()));
-              //           },
-              //         ),
-              //       )
-              //   ),
-              // ),
             ],
           ),
         ),

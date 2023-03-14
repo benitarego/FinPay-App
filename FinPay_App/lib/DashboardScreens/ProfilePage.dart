@@ -19,6 +19,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   bool loading = false;
 
+  bool isANumber = true;
+
   TextEditingController ufirstnameController = new TextEditingController();
   TextEditingController ulastnameController = new TextEditingController();
   TextEditingController uusernameController = new TextEditingController();
@@ -97,6 +99,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 SizedBox(height: 20,),
                 Divider(height: 10,),
                 SizedBox(height: 20,),
+                //EDIT Profile
                 FadeAnimation(1.4, GestureDetector(
                   onTap: () {
                     showBottomSheet(
@@ -229,6 +232,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),),
                 SizedBox(height: 20,),
+                //MFA Authentication - Enable, Verify, Delete 2FA
                 FadeAnimation(1.6, GestureDetector(
                   onTap: () {
                     showBottomSheet(
@@ -246,65 +250,97 @@ class _ProfilePageState extends State<ProfilePage> {
                                           iconSize: 25,
                                           onPressed: () {
                                             Navigator.pop(context);
-                                            // _ufullnameController.clear(); _udescController.clear(); _umobilenumberController.clear();
-                                            // _ulocationController.clear(); _uemailController.clear(); _uwebsiteController.clear();
-                                            // _ufacebookController.clear(); _ugithubController.clear(); _ulinkedinController.clear();
-                                            // _uinstagramController.clear(); _utwitterController.clear();
                                           }
                                       ),
-                                      title: Text('MFA Authentication', style: TextStyle(color: kThemeColor, fontSize: 20),),
-                                      trailing: IconButton(
-                                          icon: Icon(Icons.check, color: Colors.black,),
-                                          iconSize: 25,
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                            // if (_ufullnameController.text.isNotEmpty || _udescController.text.isNotEmpty || _umobilenumberController.text.isNotEmpty ||
-                                            //     _ulocationController.text.isNotEmpty || _uemailController.text.isNotEmpty || _uwebsiteController.text.isNotEmpty ||
-                                            //     _ufacebookController.text.isNotEmpty || _ugithubController.text.isNotEmpty || _ulinkedinController.text.isNotEmpty ||
-                                            //     _uinstagramController.text.isNotEmpty || _utwitterController.text.isNotEmpty) {
-                                            //   Firestore.instance
-                                            //       .collection("Users")
-                                            //       .document(currentUser.uid)
-                                            //       .setData({
-                                            //     "uid": currentUser.uid,
-                                            //     "fullname": _ufullnameController.text,
-                                            //     "udesc": _udescController.text,
-                                            //     "umobilenumber": _umobilenumberController.text,
-                                            //     "ulocation": _ulocationController.text,
-                                            //     "uemail": _uemailController.text,
-                                            //     "uwebsite": _uwebsiteController.text,
-                                            //     "ufacebook": _ufacebookController.text,
-                                            //     "ugithub": _ugithubController.text,
-                                            //     "ulinkedin": _ulinkedinController.text,
-                                            //     "uinstagram": _uinstagramController.text,
-                                            //     "utwitter": _utwitterController.text,
-                                            //   })
-                                            //       .then((result) => {
-                                            //     print('successfully updated'),
-                                            //     Navigator.pop(context),
-                                            //   })
-                                            //       .catchError((e) => {
-                                            //     print(e),
-                                            //     showDialog(context: context,
-                                            //         child: AlertDialog(
-                                            //           title: Text('Update something'),
-                                            //         ))
-                                            //   });
-                                            //   _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text('Profile updated successfully!')));
-                                            // }
-                                          }
-                                      ),
+                                      title: Text('MFA Authentication', textAlign: TextAlign.center, style: TextStyle(color: kThemeColor, fontSize: 20),),
                                     ),
                                     SizedBox(height: 10,),
                                     Padding(
                                         padding: EdgeInsets.only(top:10, bottom: 10, left: 20, right: 20),
                                         child: Column(
                                           children: <Widget>[
-                                            TextField(
-                                              autofocus: true,
-                                              decoration: InputDecoration(labelText: 'First Name', hintText: 'Will be displayed in profile'),
-                                              keyboardType: TextInputType.text,
-                                              controller: ufirstnameController,
+                                            // Enable 2FA
+                                            FloatingActionButton.extended(
+                                              backgroundColor: Colors.black,
+                                              onPressed: () {
+                                                showDialog(
+                                                  context: context, barrierDismissible: false, // user must tap button!
+                                                  builder: (BuildContext context) {
+                                                    return new AlertDialog(
+                                                      title: new Text('Enable 2FA'),
+                                                      content: new SingleChildScrollView(
+                                                        child: new ListBody(
+                                                          children: [
+                                                            TextField(
+                                                              autofocus: true,
+                                                              decoration: InputDecoration(
+                                                                prefixIcon: Icon(Icons.attach_money_rounded, size: 20,),
+                                                                labelText: 'Enter Amount',
+                                                                hintText: 'Ex. 123.45',
+                                                                errorText: isANumber ? null : "Please enter a number",
+                                                              ),
+                                                              keyboardType: TextInputType.number,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      actions: [
+                                                        TextButton(
+                                                          child: Text('Cancel'),
+                                                          onPressed: () {
+                                                            Navigator.of(context).pop();
+                                                          },
+                                                        ),
+                                                        TextButton(
+                                                          child: Text('Ok'),
+                                                          onPressed: () {
+                                                            Navigator.of(context).pop();
+                                                          },
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              icon: Icon( // <-- Icon
+                                                Icons.verified_user_outlined,
+                                                size: 24.0,
+                                              ),
+                                              label: Text('Enable 2FA'), // <-- Text
+                                            ),
+                                            SizedBox(height: 20,),
+                                            // Verify 2FA
+                                            FloatingActionButton.extended(
+                                              backgroundColor: Colors.black,
+                                              onPressed: () {
+                                                final snackBar = SnackBar(
+                                                  content: const Text('2FA verified successfully!'),
+                                                  duration: Duration(seconds: 2, milliseconds: 500),
+                                                );
+                                                loading ? Loading() : ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                              },
+                                              icon: Icon(
+                                                Icons.verified_user_rounded,
+                                                size: 24.0,
+                                              ),
+                                              label: Text('Verify 2FA'),
+                                            ),
+                                            SizedBox(height: 20,),
+                                            // Delete 2FA
+                                            FloatingActionButton.extended(
+                                              backgroundColor: Colors.black,
+                                              onPressed: () {
+                                                final snackBar = SnackBar(
+                                                  content: const Text('2FA deleted successfully!'),
+                                                  duration: Duration(seconds: 2, milliseconds: 500),
+                                                );
+                                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                              },
+                                              icon: Icon( // <-- Icon
+                                                Icons.cancel_outlined,
+                                                size: 24.0,
+                                              ),
+                                              label: Text('Delete 2FA'), // <-- Text
                                             ),
                                           ],
                                         )
@@ -325,113 +361,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           Icon(Icons.shield, color: Colors.black54, size: 20,),
                           SizedBox(width: 20,),
                           Text("MFA Authentication",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black54,
-                                fontSize: 16
-                            ),
-                          ),
-                        ],
-                      )
-                  ),
-                )),
-                SizedBox(height: 20,),
-                FadeAnimation(1.8, GestureDetector(
-                  onTap: () {
-                    showBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return Container(
-                              height: 900,
-                              padding: EdgeInsets.only(top: 10, bottom: 30),
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  children: <Widget>[
-                                    ListTile(
-                                      leading: IconButton(
-                                          icon: Icon(Icons.clear, color: Colors.black,),
-                                          iconSize: 25,
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                            // _ufullnameController.clear(); _udescController.clear(); _umobilenumberController.clear();
-                                            // _ulocationController.clear(); _uemailController.clear(); _uwebsiteController.clear();
-                                            // _ufacebookController.clear(); _ugithubController.clear(); _ulinkedinController.clear();
-                                            // _uinstagramController.clear(); _utwitterController.clear();
-                                          }
-                                      ),
-                                      title: Text('Change Funds', style: TextStyle(color: kThemeColor, fontSize: 20),),
-                                      trailing: IconButton(
-                                          icon: Icon(Icons.check, color: Colors.black,),
-                                          iconSize: 25,
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                            // if (_ufullnameController.text.isNotEmpty || _udescController.text.isNotEmpty || _umobilenumberController.text.isNotEmpty ||
-                                            //     _ulocationController.text.isNotEmpty || _uemailController.text.isNotEmpty || _uwebsiteController.text.isNotEmpty ||
-                                            //     _ufacebookController.text.isNotEmpty || _ugithubController.text.isNotEmpty || _ulinkedinController.text.isNotEmpty ||
-                                            //     _uinstagramController.text.isNotEmpty || _utwitterController.text.isNotEmpty) {
-                                            //   Firestore.instance
-                                            //       .collection("Users")
-                                            //       .document(currentUser.uid)
-                                            //       .setData({
-                                            //     "uid": currentUser.uid,
-                                            //     "fullname": _ufullnameController.text,
-                                            //     "udesc": _udescController.text,
-                                            //     "umobilenumber": _umobilenumberController.text,
-                                            //     "ulocation": _ulocationController.text,
-                                            //     "uemail": _uemailController.text,
-                                            //     "uwebsite": _uwebsiteController.text,
-                                            //     "ufacebook": _ufacebookController.text,
-                                            //     "ugithub": _ugithubController.text,
-                                            //     "ulinkedin": _ulinkedinController.text,
-                                            //     "uinstagram": _uinstagramController.text,
-                                            //     "utwitter": _utwitterController.text,
-                                            //   })
-                                            //       .then((result) => {
-                                            //     print('successfully updated'),
-                                            //     Navigator.pop(context),
-                                            //   })
-                                            //       .catchError((e) => {
-                                            //     print(e),
-                                            //     showDialog(context: context,
-                                            //         child: AlertDialog(
-                                            //           title: Text('Update something'),
-                                            //         ))
-                                            //   });
-                                            //   _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text('Profile updated successfully!')));
-                                            // }
-                                          }
-                                      ),
-                                    ),
-                                    SizedBox(height: 10,),
-                                    Padding(
-                                        padding: EdgeInsets.only(top:10, bottom: 10, left: 20, right: 20),
-                                        child: Column(
-                                          children: <Widget>[
-                                            TextField(
-                                              autofocus: true,
-                                              decoration: InputDecoration(labelText: 'First Name', hintText: 'Will be displayed in profile'),
-                                              keyboardType: TextInputType.text,
-                                              controller: ufirstnameController,
-                                            ),
-                                          ],
-                                        )
-                                    )
-                                  ],
-                                ),
-                              )
-                          );
-                        }
-                    );
-                  },
-                  child: Container(
-                      padding: EdgeInsets.only(left: 5, top: 5, bottom: 5, right: 5),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Icon(Icons.attach_money_rounded, color: Colors.black54, size: 20,),
-                          SizedBox(width: 20,),
-                          Text("Change Funds",
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 color: Colors.black54,
