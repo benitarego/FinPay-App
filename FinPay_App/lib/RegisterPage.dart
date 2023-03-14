@@ -4,6 +4,8 @@ import 'package:FinPay/Loading.dart';
 import 'package:FinPay/LoginPage.dart';
 import 'package:FinPay/ThemeColor.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:FinPay/DatabaseHelper.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -25,6 +27,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
   bool loading = false;
   String? _errorMessage;
+
+  DatabaseHelper databaseHelper = new DatabaseHelper();
+  String msgStatus = '';
 
   @override
   void initState() {
@@ -57,6 +62,38 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  _onPressed(){
+    setState(() {
+      if(ufirstnameController.text.trim().isNotEmpty &&
+          ulastnameController.text.trim().isNotEmpty &&
+          uusernameController.text.trim().toLowerCase().isNotEmpty &&
+          uemailController.text.trim().toLowerCase().isNotEmpty &&
+          upasswordController.text.trim().isNotEmpty &&
+          umobilenoController.text.trim().isNotEmpty){
+        databaseHelper.registerData(
+            ufirstnameController.text.trim(),
+            ulastnameController.text.trim(),
+            uusernameController.text.trim().toLowerCase(),
+            uemailController.text.trim().toLowerCase(),
+            upasswordController.text.trim(),
+            umobilenoController.text.trim())
+            .whenComplete((){
+          if(databaseHelper.status){
+            _showDialog();
+            msgStatus = 'Check username or password';
+          }else{
+            _showAgreementDialog();
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DashboardPage()));
+          }
+        });
+      }
+    });
+  }
+
+
   String emailValidator(String value) {
     // Pattern pattern =
     //     r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$';
@@ -67,43 +104,6 @@ class _RegisterPageState extends State<RegisterPage> {
       return "";
     }
   }
-
-  // void register() {
-  //   if (_registerFormKey.currentState.validate()) {
-  //     setState(() => loading = true);
-  //     Navigator.pushAndRemoveUntil(
-  //         context, MaterialPageRoute(
-  //         builder: (context) => DashboardPage()));
-  //     // FirebaseAuth.instance.createUserWithEmailAndPassword(
-  //     //     email: uemailController.text.trim(),
-  //     //     password: upasswordController.text)
-  //     //     .then((currentUser) => Firestore.instance
-  //     //     .collection("Users")
-  //     //     .document(currentUser.user.uid)
-  //     //     .setData({
-  //     //   // "uid": currentUser.user.uid,
-  //     //   "fullname": ufullnameController.text,
-  //     //   "uemail": uemailController.text,
-  //     //   "upassword": upasswordController.text
-  //     // }).then((result) => {
-  //     //   Navigator.pushAndRemoveUntil(
-  //     //       context, MaterialPageRoute(
-  //     //       builder: (context) => DashboardScreen(uid: currentUser.user.uid)), (_) => false),
-  //     //   ufullnameController.clear(),
-  //     //   uemailController.clear(),
-  //     //   upasswordController.clear()
-  //     // })
-  //     //     .catchError((e) => print(e)))
-  //     //     .catchError((e) => print(e));
-  //     print("registered");
-  //     // } else {
-  //     //   setState(() {
-  //     //     error = 'Please check the details entered';
-  //     //     loading = false;
-  //     //   });
-  //     // }
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -353,62 +353,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 child: MaterialButton(
                                   minWidth: 180,
                                   height: 50,
-                                  onPressed: () {
-                                    showDialog(context: context, builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: Center(child: Text('TERMS OF SERVICE', style: TextStyle(color: kThemeColor, fontWeight: FontWeight.bold),),),
-                                        content: SingleChildScrollView(
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: <Widget>[
-                                              SizedBox(height: 10,),
-                                              Text("PAYMENT", style: TextStyle(color: kThemeColor, fontWeight: FontWeight.w600),),
-                                              SizedBox(height: 10,),
-                                              Text("All payments are due upon receipt. If a payment is not received or payment method is declined, he buyer forfeits the ownership of any item purchased. If no payment is received, request sender for payment."),
-                                              SizedBox(height: 30,),
-                                              Text("AUTHORIZED USERS", style: TextStyle(color: kThemeColor, fontWeight: FontWeight.w600),),
-                                              SizedBox(height: 10,),
-                                              Text("All payments are due upon receipt. If a payment is not received or payment method is declined, he buyer forfeits the ownership of any item purchased. If no payment is received, request sender for payment."),
-                                              SizedBox(height: 30,),
-                                              Text("OTHER POLICIES", style: TextStyle(color: kThemeColor, fontWeight: FontWeight.w600),),
-                                              SizedBox(height: 10,),
-                                              Text("All payments are due upon receipt. If a payment is not received or payment method is declined, he buyer forfeits the ownership of any item purchased. If no payment is received, request sender for payment."),
-                                              SizedBox(height: 10,),
-                                            ],
-                                          ),
-                                        ),
-                                        actions: [
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                            children: <Widget>[
-                                              OutlinedButton(
-                                                  child: Text('CANCEL', style: TextStyle(color: kThemeColor),),
-                                                  style: OutlinedButton.styleFrom(
-                                                    primary: kThemeColor,
-                                                  ),
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  }
-                                              ),
-                                              OutlinedButton(
-                                                  child: Text('ACCEPT', style: TextStyle(color: Colors.white),),
-                                                  style: OutlinedButton.styleFrom(
-                                                    backgroundColor: kThemeColor,
-                                                  ),
-                                                  onPressed: () {
-                                                    Navigator.pushReplacement(
-                                                        context, MaterialPageRoute(
-                                                        builder: (context) => DashboardPage())
-                                                    );
-                                                  }
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      );
-                                    });
-                                  },
+                                  onPressed: _onPressed,
                                   color: kThemeColor,
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
@@ -430,7 +375,15 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 SizedBox(height: 10.0,),
-                Text(_errorMessage ?? "", style: TextStyle(color: Colors.red, fontSize: 14),),
+                Container(
+                  height: 20,
+                  child: new Text(
+                    '$msgStatus',
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
                 SizedBox(height: 30.0,),
                 FadeAnimation(2.0,
                     Row(
@@ -466,6 +419,88 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           )
       ),
+    );
+  }
+
+  void _showAgreementDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+      return AlertDialog(
+        title: Center(child: Text('TERMS OF SERVICE', style: TextStyle(color: kThemeColor, fontWeight: FontWeight.bold),),),
+        content: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(height: 10,),
+              Text("PAYMENT", style: TextStyle(color: kThemeColor, fontWeight: FontWeight.w600),),
+              SizedBox(height: 10,),
+              Text("All payments are due upon receipt. If a payment is not received or payment method is declined, he buyer forfeits the ownership of any item purchased. If no payment is received, request sender for payment."),
+              SizedBox(height: 30,),
+              Text("AUTHORIZED USERS", style: TextStyle(color: kThemeColor, fontWeight: FontWeight.w600),),
+              SizedBox(height: 10,),
+              Text("All payments are due upon receipt. If a payment is not received or payment method is declined, he buyer forfeits the ownership of any item purchased. If no payment is received, request sender for payment."),
+              SizedBox(height: 30,),
+              Text("OTHER POLICIES", style: TextStyle(color: kThemeColor, fontWeight: FontWeight.w600),),
+              SizedBox(height: 10,),
+              Text("All payments are due upon receipt. If a payment is not received or payment method is declined, he buyer forfeits the ownership of any item purchased. If no payment is received, request sender for payment."),
+              SizedBox(height: 10,),
+            ],
+          ),
+        ),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              OutlinedButton(
+                  child: Text('CANCEL', style: TextStyle(color: kThemeColor),),
+                  style: OutlinedButton.styleFrom(
+                    primary: kThemeColor,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }
+              ),
+              OutlinedButton(
+                  child: Text('ACCEPT', style: TextStyle(color: Colors.white),),
+                  style: OutlinedButton.styleFrom(
+                    backgroundColor: kThemeColor,
+                  ),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context, MaterialPageRoute(
+                        builder: (context) => DashboardPage())
+                    );
+                  }
+              ),
+            ],
+          )
+        ],
+      );
+    });
+  }
+
+  void _showDialog(){
+    showDialog(
+        context:context ,
+        builder:(BuildContext context){
+          return AlertDialog(
+            title: new Text('Failed'),
+            content:  new Text('Check your details'),
+            actions: <Widget>[
+              OutlinedButton(
+                child: Text(
+                  'Close',
+                ),
+                onPressed: (){
+                  Navigator.of(context).pop();
+                },
+
+              ),
+            ],
+          );
+        }
     );
   }
 }

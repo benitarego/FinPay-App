@@ -4,6 +4,8 @@ import 'package:FinPay/Loading.dart';
 import 'package:FinPay/RegisterPage.dart';
 import 'package:FinPay/ThemeColor.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:FinPay/DatabaseHelper.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -14,65 +16,19 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState>_loginFormKey = GlobalKey<FormState>();
-  TextEditingController ufullnameController = new TextEditingController();
-  TextEditingController uemailController = new TextEditingController();
+  TextEditingController uusernameController = new TextEditingController();
   TextEditingController upasswordController = new TextEditingController();
 
   bool loading = false;
   String? _errorMessage;
 
+  DatabaseHelper databaseHelper = new DatabaseHelper();
+  String msgStatus = '';
+
   @override
   void initState() {
     super.initState();
   }
-
-  // String emailValidator(String value) {
-  //   Pattern pattern =
-  //       r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$';
-  //   RegExp regex = new RegExp(pattern);
-  //   if (!regex.hasMatch(value)) {
-  //     return 'Email format is invalid';
-  //   } else {
-  //     return null;
-  //   }
-  // }
-
-  // void register() {
-  //   if (_registerFormKey.currentState.validate()) {
-  //     setState(() => loading = true);
-  //     Navigator.pushAndRemoveUntil(
-  //         context, MaterialPageRoute(
-  //         builder: (context) => DashboardPage()));
-  //     // FirebaseAuth.instance.createUserWithEmailAndPassword(
-  //     //     email: uemailController.text.trim(),
-  //     //     password: upasswordController.text)
-  //     //     .then((currentUser) => Firestore.instance
-  //     //     .collection("Users")
-  //     //     .document(currentUser.user.uid)
-  //     //     .setData({
-  //     //   // "uid": currentUser.user.uid,
-  //     //   "fullname": ufullnameController.text,
-  //     //   "uemail": uemailController.text,
-  //     //   "upassword": upasswordController.text
-  //     // }).then((result) => {
-  //     //   Navigator.pushAndRemoveUntil(
-  //     //       context, MaterialPageRoute(
-  //     //       builder: (context) => DashboardScreen(uid: currentUser.user.uid)), (_) => false),
-  //     //   ufullnameController.clear(),
-  //     //   uemailController.clear(),
-  //     //   upasswordController.clear()
-  //     // })
-  //     //     .catchError((e) => print(e)))
-  //     //     .catchError((e) => print(e));
-  //     print("registered");
-  //     // } else {
-  //     //   setState(() {
-  //     //     error = 'Please check the details entered';
-  //     //     loading = false;
-  //     //   });
-  //     // }
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -138,21 +94,18 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(
                       children: <Widget>[
                         FadeAnimation(0.8, TextFormField(
-                          controller: uemailController,
+                          controller: uusernameController,
                           validator: (value) {
-                            // Pattern pattern =
-                            //     r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$';
-                            // RegExp regex = new RegExp(pattern);
                             if (value!.isEmpty) {
-                              return 'Email format is invalid';
+                              return 'Username is empty';
                             } else {
                               return null;
                             };
                           },
-                          keyboardType: TextInputType.emailAddress,
+                          keyboardType: TextInputType.text,
                           decoration: InputDecoration(
-                            labelText: "Email",
-                            icon: Icon(Icons.email),
+                            labelText: "Username",
+                            icon: Icon(Icons.person),
                             focusColor: Colors.black87,
                             contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                             enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey,),),
@@ -206,10 +159,23 @@ class _LoginPageState extends State<LoginPage> {
                                   minWidth: 180,
                                   height: 50,
                                   onPressed: () {
-                                    Navigator.pushReplacement(
-                                        context, MaterialPageRoute(
-                                        builder: (context) => DashboardPage())
-                                    );
+                                    setState(() {
+                                      if(uusernameController.text.trim().toLowerCase().isNotEmpty &&
+                                          upasswordController.text.trim().isNotEmpty ){
+                                        databaseHelper.loginData(uusernameController.text.trim().toLowerCase(),
+                                            upasswordController.text.trim()).whenComplete((){
+                                          if(databaseHelper.status){
+                                            _showDialog();
+                                            msgStatus = 'Check email or password';
+                                          }else{
+                                            Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) => DashboardPage()));
+                                          }
+                                        });
+                                      }
+                                    });
                                   },
                                   color: kThemeColor,
                                   elevation: 0,
@@ -232,7 +198,15 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 SizedBox(height: 10.0,),
-                Text(_errorMessage ?? "", style: TextStyle(color: Colors.red, fontSize: 14),),
+                Container(
+                  height: 20,
+                  child: new Text(
+                    '$msgStatus',
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
                 SizedBox(height: 30.0,),
                 FadeAnimation(1.1,
                     Row(
@@ -268,6 +242,29 @@ class _LoginPageState extends State<LoginPage> {
             ),
           )
       ),
+    );
+  }
+
+  void _showDialog(){
+    showDialog(
+        context:context ,
+        builder:(BuildContext context){
+          return AlertDialog(
+            title: new Text('Failed'),
+            content:  new Text('Check your username or password'),
+            actions: <Widget>[
+              OutlinedButton(
+                child: Text(
+                  'Close',
+                ),
+                onPressed: (){
+                  Navigator.of(context).pop();
+                },
+
+              ),
+            ],
+          );
+        }
     );
   }
 }

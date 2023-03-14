@@ -2,6 +2,10 @@ import 'package:FinPay/Loading.dart';
 import 'package:flutter/material.dart';
 import 'package:FinPay/ThemeColor.dart';
 import 'package:FinPay/FadeAnimation.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
+import 'package:FinPay/DatabaseHelper.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -22,6 +26,11 @@ class _HomePageState extends State<HomePage> {
       isANumber = valid;
     });
   }
+
+  DatabaseHelper databaseHelper = new DatabaseHelper();
+  String msgStatus = '';
+
+  // List data = [];
 
   @override
   Widget build(BuildContext context) {
@@ -85,32 +94,62 @@ class _HomePageState extends State<HomePage> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      FadeAnimation(0.1, Text("Welcome to", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600, fontSize: 20),),),
-                      SizedBox(width: 10,),
-                      FadeAnimation(0.3, Row(
-                        children: <Widget>[
-                          Text("Fin", style: TextStyle(color: kThemeColor, fontWeight: FontWeight.bold, fontSize: 40),),
-                          SizedBox(width: 0,),
-                          Text("Pay", style: TextStyle(color: kYellowColor, fontWeight: FontWeight.bold, fontSize: 40),),
-                        ],
-                      ),),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: ListView.builder(
+                  itemCount: databaseHelper.data.length == 0 ? 0 : databaseHelper.data.length,
+                  itemBuilder: (ctx, i) => Column(
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () {
+                          // showStudent(context, i);
+                        },
+                        child: Card(
+                          color: Colors.grey[400],
+                          child: ListTile(
+                            title: Text(
+                              "${databaseHelper.data[i]["username"]}",
+                              style: TextStyle(fontSize: 20.0),
+                            ),
+                            subtitle: Column(
+                              children: <Widget>[
+                                Text(
+                                  "${databaseHelper.data[i]["email"]}",
+                                  style: TextStyle(fontSize: 15.0),
+                                ),
+                                SizedBox(height: 5,),
+                                Text(
+                                  "${databaseHelper.data[i]["mobilenumber"]}",
+                                  style: TextStyle(fontSize: 15.0),
+                                ),
+                              ],
+                            ),
+                            leading: CircleAvatar(
+                              backgroundImage: AssetImage("assets/image/user.jpeg"),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Divider()
                     ],
                   ),
+                ),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  FadeAnimation(0.1, Text("Welcome to", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600, fontSize: 20),),),
                   SizedBox(width: 10,),
-                  FadeAnimation(0.1, CircleAvatar(
-                    backgroundImage: NetworkImage("https://randomuser.me/api/portraits/men/5.jpg"),
-                    maxRadius: 35,
-                  ),)
+                  FadeAnimation(0.3, Row(
+                    children: <Widget>[
+                      Text("Fin", style: TextStyle(color: kThemeColor, fontWeight: FontWeight.bold, fontSize: 40),),
+                      SizedBox(width: 0,),
+                      Text("Pay", style: TextStyle(color: kYellowColor, fontWeight: FontWeight.bold, fontSize: 40),),
+                    ],
+                  ),),
                 ],
               ),
-              SizedBox(height: 20,),
               FadeAnimation(0.5, Center(
                 child: Container(
                   height: 170,
