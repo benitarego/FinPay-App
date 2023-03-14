@@ -141,7 +141,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     SizedBox(height: 20.0,),
                     FadeAnimation(0.4,
-                      Text('Register with FinPay',
+                      Text('Register with FlexPay',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 27.0,
@@ -230,14 +230,15 @@ class _RegisterPageState extends State<RegisterPage> {
                         FadeAnimation(1.0, TextFormField(
                           controller: uusernameController,
                           validator: (value) {
-                            if (value != null && value.isEmpty) {
-                              return 'Enter User Name';
+                            if (value!.isEmpty && value.length > 8 && value.length < 8 && !value.contains("W")) {
+                            return 'Enter valid Student ID';
                             }
                             return null;
                           },
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
-                            labelText: 'Usermame',
+                            labelText: 'SCU Student ID',
+                            hintText: 'Ex. W1654769',
                             icon: Icon(
                                 Icons.abc
                             ),
@@ -296,7 +297,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             // Pattern pattern =
                             //     r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$';
                             // RegExp regex = new RegExp(pattern);
-                            if (value!.isEmpty) {
+                            if (value!.isEmpty && !value.contains('@scu.edu')) {
                               return 'Email format is invalid';
                             } else {
                               return null;
@@ -305,6 +306,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             labelText: "Email",
+                            hintText: 'Ex. bbronco@scu.edu',
                             icon: Icon(Icons.email),
                             focusColor: Colors.black87,
                             contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
@@ -315,16 +317,17 @@ class _RegisterPageState extends State<RegisterPage> {
                         SizedBox(height: 20.0,),
                         FadeAnimation(1.6, TextFormField(
                           controller: umobilenoController,
-                          // validator: (value) {
-                          //   if (value.length < 6 || value.isEmpty) {
-                          //     return 'Password must be longer than 6 characters';
-                          //   } else {
-                          //     return null;
-                          //   }
-                          // },
+                          validator: (value) {
+                            if (value!.length < 10 || value.isEmpty) {
+                              return 'mobile number must have 10 digits';
+                            } else {
+                              return null;
+                            }
+                          },
                           keyboardType: TextInputType.phone,
                           obscureText: true,
                           decoration: InputDecoration(
+                            hintText: 'Ex. 6697664555',
                             labelText: "Mobile Number",
                             icon: Icon(
                                 Icons.phone

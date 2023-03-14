@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class DatabaseHelper {
 
-  String serverUrl = "http://10.0.2.2:5000";
+  String serverUrl = "https://us-west-2.aws.data.mongodb-api.com/app/data-kiruz/endpoint/data/v1";
 
   var status;
   var token;

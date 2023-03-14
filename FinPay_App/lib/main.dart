@@ -71,7 +71,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   child: Container(
                     padding: EdgeInsets.all(16.0),
                     child: Text(
-                      "FinPay",
+                      "FlexPay",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,

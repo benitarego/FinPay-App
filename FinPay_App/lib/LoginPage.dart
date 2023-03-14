@@ -125,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
-                            labelText: "Username",
+                            labelText: "SCU Student ID",
                             icon: Icon(Icons.person),
                             focusColor: Colors.black87,
                             contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
