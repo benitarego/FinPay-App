@@ -37,14 +37,14 @@ class _LoginPageState extends State<LoginPage> {
         databaseHelper.loginData(uusernameController.text.trim(),
             upasswordController.text.trim()).whenComplete((){
           if(databaseHelper.status){
-            _showDialog();
-            msgStatus = 'Check email or password';
-            print("error!!");
-          }else{
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => DashboardPage()));
+                    builder: (context) => DashboardPage(title: databaseHelper.token)));
+          }else{
+            _showDialog();
+            msgStatus = 'Check email or password';
+            print("error!!");
           }
         });
       }

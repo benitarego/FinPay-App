@@ -8,6 +8,7 @@ import 'package:http/http.dart';
 import 'package:FinPay/DatabaseHelper.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -48,21 +49,26 @@ class _RegisterPageState extends State<RegisterPage> {
           _upasswordController.text.trim().isNotEmpty &&
           _umobilenoController.text.trim().isNotEmpty){
         databaseHelper.register(
-            _ufirstnameController.text,
-            _ulastnameController.text,
-            _uusernameController.text,
-            _uemailController.text,
-            _upasswordController.text,
-            _umobilenoController.text)
+            _ufirstnameController.text.trim(),
+            _ulastnameController.text.trim(),
+            _uusernameController.text.trim(),
+            _uemailController.text.trim(),
+            _upasswordController.text.trim(),
+            _umobilenoController.text.trim())
             .whenComplete((){
           if(databaseHelper.status){
+            print("DONE!!");
+            _showAgreementDialog();
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DashboardPage(title: databaseHelper.token)));
+
+          }else{
             _showDialog();
+            print(databaseHelper.status);
             msgStatus = 'Check username or password';
             print("error!!");
-          }else{
-            _showAgreementDialog();
-            print("DONE!!");
-            Navigator.pushReplacementNamed(context, '/dashboard');
           }
         });
       }

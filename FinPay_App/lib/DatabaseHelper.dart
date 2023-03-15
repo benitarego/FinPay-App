@@ -8,22 +8,23 @@ class DatabaseHelper {
 
   String serverUrl = "https://8e3d-67-161-99-88.ngrok.io/api/users/register";
 
-  var status;
-  var token;
+  bool status = true;
+  var token = "";
 
-  loginData(String username, password) async {
-    final response = await http.post('https://4e74-67-161-99-88.ngrok.io/api/users/login',
+  loginData(String username, String password) async {
+    final response = await http.post(Uri.parse('https://4e74-67-161-99-88.ngrok.io/api/users/login'),
         headers: {
-          'Accept':'application/json'
+          'Content-Type': 'application/json',
         },
         body: json.encode({
-          "username": username,
-          "password" : password
+          "user": {
+            "username": username,
+            "password" : password
+          }
         }));
 
     var data = json.decode(response.body.toString());
     print(data);
-
     if(response.statusCode == 200){
       print(data['token']);
       print('Login successfully');
@@ -34,58 +35,63 @@ class DatabaseHelper {
   }
 
   register(String firstName, String lastName, String username, String email , String password, String mobile) async{
-    var headers = {
-      'Content-Type': 'application/json'
-    };
-    var request = http.Request('POST', Uri.parse('https://4e74-67-161-99-88.ngrok.io/api/users/register'));
-    request.body = json.encode({
-      "user": {
-        "firstName": firstName,
-        "lastName": lastName,
-        "username": username,
-        "email": email,
-        "password": password,
-        "mobile": mobile
-      }
-    });
-    request.headers.addAll(headers);
+    final response = await http.post(Uri.parse('https://4e74-67-161-99-88.ngrok.io/api/users/register'),
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": 'Basic $token',
+        },
+        body: json.encode({
+          "user": {
+            "firstName": firstName,
+            "lastName": lastName,
+            "username": username,
+            "email": email,
+            "password" : password,
+            "mobile": mobile
+          }
+        })
+    );
 
-    http.StreamedResponse response = await request.send();
+    print(response.body);
+    print(response.statusCode);
 
-    if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
+    var data = jsonDecode(response.body.toString());
+
+    if(response.statusCode == 200){
+      print(data['token']);
+      print('Register successfully');
+
+    }else {
+      print('failed');
     }
-    else {
-      print(response.reasonPhrase);
-    }
-
-    // final response = await http.post(Uri.parse('https://8e3d-67-161-99-88.ngrok.io/api/users/register'),
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     },
-    //     body: {
-    //       "user": json.encode({
-    //         "firstName": firstname,
-    //         "lastName": lastname,
-    //         "username": username,
-    //         "email": email,
-    //         "password" : password,
-    //         "mobile": mobilenumber
-    //       })
-    //     }
-    // );
-    //
-    // print(response.body);
-    // print(response.statusCode);
-    //
-    // var data = jsonDecode(response.body.toString());
+    // var headers = {
+    //   'Content-Type': 'application/json'
+    // };
+    // var request = http.Request('POST', Uri.parse('https://4e74-67-161-99-88.ngrok.io/api/users/register'));
+    // request.body = json.encode({
+    //   "user": {
+    //     "firstName": firstName,
+    //     "lastName": lastName,
+    //     "username": username,
+    //     "email": email,
+    //     "password": password,
+    //     "mobile": mobile
+    //   }
+    // });
+    // request.headers.addAll(headers);
+    // http.StreamedResponse response = await request.send();
     //
     // if(response.statusCode == 200){
-    //   print(data['token']);
     //   print('Register successfully');
     //
     // }else {
     //   print('failed');
+    // }
+
+    // if (response.statusCode == 200) {
+    //   print(await response.stream.bytesToString());
+    // } else {
+    //   print(response.reasonPhrase);
     // }
   }
 
@@ -93,9 +99,10 @@ class DatabaseHelper {
 
   Future<String> getUsers() async {
     var response = await http.get(
-      Uri.encodeFull("$serverUrl/getUsers"),
+      Uri.encodeFull("https://4e74-67-161-99-88.ngrok.io/api/users/getUsers"),
       headers: {
-        "Accept": "application/json"
+        "Accept": "application/json",
+        "Authorization": token
       }
     );
 
