@@ -452,13 +452,10 @@ class _RegisterPageState extends State<RegisterPage> {
             content:  new Text('Check your details'),
             actions: <Widget>[
               OutlinedButton(
-                child: Text(
-                  'Close',
-                ),
+                child: Text('Close',),
                 onPressed: (){
                   Navigator.of(context).pop();
                 },
-
               ),
             ],
           );
