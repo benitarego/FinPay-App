@@ -136,15 +136,6 @@ class _HomePageState extends State<HomePage> {
                     }
                 ),
               ),
-              // FadeAnimation(0.1, Text("Welcome to", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600, fontSize: 20),),),
-              // SizedBox(width: 10,),
-              // FadeAnimation(0.3, Row(
-              //   children: <Widget>[
-              //     Text("Fin", style: TextStyle(color: kThemeColor, fontWeight: FontWeight.bold, fontSize: 40),),
-              //     SizedBox(width: 0,),
-              //     Text("Pay", style: TextStyle(color: kYellowColor, fontWeight: FontWeight.bold, fontSize: 40),),
-              //   ],
-              // ),),
               // TRANSFER FUNDS, REQUEST FUNDS
               FadeAnimation(0.7, Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

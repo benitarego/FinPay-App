@@ -16,6 +16,10 @@ class _FlexCardState extends State<FlexCard> {
   ScrollController _scrollController = new ScrollController();
   Color _iconColor = Colors.yellow;
 
+  final TextEditingController umoneycontroller = new TextEditingController();
+  final TextEditingController uusernamecontroller = new TextEditingController();
+  final TextEditingController up2pmoneycontroller = new TextEditingController();
+
   bool loading = false;
 
   bool isANumber = true;
@@ -60,110 +64,6 @@ class _FlexCardState extends State<FlexCard> {
                           child: Text("USD 0.00", style: TextStyle(color: Colors.greenAccent, fontSize: 25, fontWeight: FontWeight.w600),)
                         ),
                       ),
-                      // Padding(
-                      //   padding: EdgeInsets.all(10),
-                      //   child: ElevatedButton(
-                      //     style: ButtonStyle(
-                      //         backgroundColor: MaterialStateProperty.all<Color>(kYellowColor),
-                      //         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      //             RoundedRectangleBorder(
-                      //               borderRadius: BorderRadius.circular(18.0),
-                      //             )
-                      //         )
-                      //     ),
-                      //     child: const Text('ADD FUNDS', style: TextStyle(color: Colors.white, fontSize: 16),),
-                      //     onPressed: () {
-                      //       showModalBottomSheet(
-                      //           context: context,
-                      //           builder: (context) {
-                      //             return Container(
-                      //                 height: 900,
-                      //                 padding: EdgeInsets.only(top: 10, bottom: 30),
-                      //                 child: SingleChildScrollView(
-                      //                   child: Column(
-                      //                     children: <Widget>[
-                      //                       ListTile(
-                      //                         leading: IconButton(
-                      //                             icon: Icon(Icons.clear, color: Colors.black,),
-                      //                             iconSize: 25,
-                      //                             onPressed: () {
-                      //                               Navigator.pop(context);
-                      //                               // _ufullnameController.clear(); _udescController.clear(); _umobilenumberController.clear();
-                      //                               // _ulocationController.clear(); _uemailController.clear(); _uwebsiteController.clear();
-                      //                               // _ufacebookController.clear(); _ugithubController.clear(); _ulinkedinController.clear();
-                      //                               // _uinstagramController.clear(); _utwitterController.clear();
-                      //                             }
-                      //                         ),
-                      //                         title: Text('Add Funds', style: TextStyle(color: kThemeColor, fontSize: 20),),
-                      //                         trailing: IconButton(
-                      //                             icon: Icon(Icons.check, color: Colors.black,),
-                      //                             iconSize: 25,
-                      //                             onPressed: () {
-                      //                               Navigator.pop(context);
-                      //                               // if (_ufullnameController.text.isNotEmpty || _udescController.text.isNotEmpty || _umobilenumberController.text.isNotEmpty ||
-                      //                               //     _ulocationController.text.isNotEmpty || _uemailController.text.isNotEmpty || _uwebsiteController.text.isNotEmpty ||
-                      //                               //     _ufacebookController.text.isNotEmpty || _ugithubController.text.isNotEmpty || _ulinkedinController.text.isNotEmpty ||
-                      //                               //     _uinstagramController.text.isNotEmpty || _utwitterController.text.isNotEmpty) {
-                      //                               //   Firestore.instance
-                      //                               //       .collection("Users")
-                      //                               //       .document(currentUser.uid)
-                      //                               //       .setData({
-                      //                               //     "uid": currentUser.uid,
-                      //                               //     "fullname": _ufullnameController.text,
-                      //                               //     "udesc": _udescController.text,
-                      //                               //     "umobilenumber": _umobilenumberController.text,
-                      //                               //     "ulocation": _ulocationController.text,
-                      //                               //     "uemail": _uemailController.text,
-                      //                               //     "uwebsite": _uwebsiteController.text,
-                      //                               //     "ufacebook": _ufacebookController.text,
-                      //                               //     "ugithub": _ugithubController.text,
-                      //                               //     "ulinkedin": _ulinkedinController.text,
-                      //                               //     "uinstagram": _uinstagramController.text,
-                      //                               //     "utwitter": _utwitterController.text,
-                      //                               //   })
-                      //                               //       .then((result) => {
-                      //                               //     print('successfully updated'),
-                      //                               //     Navigator.pop(context),
-                      //                               //   })
-                      //                               //       .catchError((e) => {
-                      //                               //     print(e),
-                      //                               //     showDialog(context: context,
-                      //                               //         child: AlertDialog(
-                      //                               //           title: Text('Update something'),
-                      //                               //         ))
-                      //                               //   });
-                      //                               //   _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text('Profile updated successfully!')));
-                      //                               // }
-                      //                             }
-                      //                         ),
-                      //                       ),
-                      //                       SizedBox(height: 10,),
-                      //                       Padding(
-                      //                           padding: EdgeInsets.only(top:20, bottom: 20, left: 20, right: 20),
-                      //                           child: Column(
-                      //                             children: <Widget>[
-                      //                               TextField(
-                      //                                 autofocus: true,
-                      //                                 decoration: InputDecoration(
-                      //                                   prefixIcon: Icon(Icons.attach_money_rounded, size: 20,),
-                      //                                   labelText: 'Enter Amount',
-                      //                                   hintText: 'Ex. 123.45',
-                      //                                   errorText: isANumber ? null : "Please enter a number",
-                      //                                 ),
-                      //                                 keyboardType: TextInputType.number,
-                      //                               ),
-                      //                             ],
-                      //                           )
-                      //                       )
-                      //                     ],
-                      //                   ),
-                      //                 )
-                      //             );
-                      //           }
-                      //       );
-                      //     },
-                      //   ),
-                      // )
                     ],
                   )
               ),),
@@ -189,10 +89,7 @@ class _FlexCardState extends State<FlexCard> {
                                             iconSize: 25,
                                             onPressed: () {
                                               Navigator.pop(context);
-                                              // _ufullnameController.clear(); _udescController.clear(); _umobilenumberController.clear();
-                                              // _ulocationController.clear(); _uemailController.clear(); _uwebsiteController.clear();
-                                              // _ufacebookController.clear(); _ugithubController.clear(); _ulinkedinController.clear();
-                                              // _uinstagramController.clear(); _utwitterController.clear();
+                                              umoneycontroller.clear();
                                             }
                                         ),
                                         title: Text('Deposit Points', style: TextStyle(color: kThemeColor, fontSize: 20),),
@@ -206,26 +103,13 @@ class _FlexCardState extends State<FlexCard> {
                                               );
                                               loading ? Loading() : ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                               Navigator.pop(context);
-                                              // if (_ufullnameController.text.isNotEmpty || _udescController.text.isNotEmpty || _umobilenumberController.text.isNotEmpty ||
-                                              //     _ulocationController.text.isNotEmpty || _uemailController.text.isNotEmpty || _uwebsiteController.text.isNotEmpty ||
-                                              //     _ufacebookController.text.isNotEmpty || _ugithubController.text.isNotEmpty || _ulinkedinController.text.isNotEmpty ||
-                                              //     _uinstagramController.text.isNotEmpty || _utwitterController.text.isNotEmpty) {
+                                              // if (_ufullnameController.text.isNotEmpty) {
                                               //   Firestore.instance
                                               //       .collection("Users")
                                               //       .document(currentUser.uid)
                                               //       .setData({
                                               //     "uid": currentUser.uid,
                                               //     "fullname": _ufullnameController.text,
-                                              //     "udesc": _udescController.text,
-                                              //     "umobilenumber": _umobilenumberController.text,
-                                              //     "ulocation": _ulocationController.text,
-                                              //     "uemail": _uemailController.text,
-                                              //     "uwebsite": _uwebsiteController.text,
-                                              //     "ufacebook": _ufacebookController.text,
-                                              //     "ugithub": _ugithubController.text,
-                                              //     "ulinkedin": _ulinkedinController.text,
-                                              //     "uinstagram": _uinstagramController.text,
-                                              //     "utwitter": _utwitterController.text,
                                               //   })
                                               //       .then((result) => {
                                               //     print('successfully updated'),
@@ -238,7 +122,6 @@ class _FlexCardState extends State<FlexCard> {
                                               //           title: Text('Update something'),
                                               //         ))
                                               //   });
-                                              //   _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text('Profile updated successfully!')));
                                               // }
                                             }
                                         ),
@@ -250,6 +133,7 @@ class _FlexCardState extends State<FlexCard> {
                                             children: <Widget>[
                                               TextField(
                                                 autofocus: true,
+                                                controller: umoneycontroller,
                                                 decoration: InputDecoration(
                                                   prefixIcon: Icon(Icons.attach_money_rounded, size: 20,),
                                                   labelText: 'Enter Amount',
@@ -373,6 +257,7 @@ class _FlexCardState extends State<FlexCard> {
                                             children: <Widget>[
                                               TextField(
                                                 autofocus: true,
+                                                controller: uusernamecontroller,
                                                 decoration: InputDecoration(
                                                   prefixIcon: Icon(Icons.person, size: 20,),
                                                   labelText: 'Enter username of peer',
@@ -383,6 +268,7 @@ class _FlexCardState extends State<FlexCard> {
                                               SizedBox(height: 10,),
                                               TextField(
                                                 autofocus: true,
+                                                controller: up2pmoneycontroller,
                                                 decoration: InputDecoration(
                                                   prefixIcon: Icon(Icons.attach_money_rounded, size: 20,),
                                                   labelText: 'Enter Amount to be transferred',

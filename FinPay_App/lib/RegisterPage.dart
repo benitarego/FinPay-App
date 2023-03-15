@@ -6,6 +6,8 @@ import 'package:FinPay/ThemeColor.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:FinPay/DatabaseHelper.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -16,67 +18,42 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
 
-  final GlobalKey<FormState>_registerFormKey = GlobalKey<FormState>();
-
-  TextEditingController ufirstnameController = new TextEditingController();
-  TextEditingController ulastnameController = new TextEditingController();
-  TextEditingController uusernameController = new TextEditingController();
-  TextEditingController upasswordController = new TextEditingController();
-  TextEditingController uemailController = new TextEditingController();
-  TextEditingController umobilenoController = new TextEditingController();
-
-  bool loading = false;
-  String? _errorMessage;
+  final TextEditingController _ufirstnameController = new TextEditingController();
+  final TextEditingController _ulastnameController = new TextEditingController();
+  final TextEditingController _uusernameController = new TextEditingController();
+  final TextEditingController _upasswordController = new TextEditingController();
+  final TextEditingController _uemailController = new TextEditingController();
+  final TextEditingController _umobilenoController = new TextEditingController();
 
   DatabaseHelper databaseHelper = new DatabaseHelper();
+  bool loading = false;
   String msgStatus = '';
 
   @override
   void initState() {
-    ufirstnameController = TextEditingController()..addListener(clearError);
-    ulastnameController = TextEditingController()..addListener(clearError);
-    uusernameController = TextEditingController()..addListener(clearError);
-    upasswordController = TextEditingController()..addListener(clearError);
-    uemailController = TextEditingController()..addListener(clearError);
-    umobilenoController = TextEditingController()..addListener(clearError);
     super.initState();
   }
 
   @override
   void dispose() {
-    ufirstnameController.dispose();
-    ulastnameController.dispose();
-    uusernameController.dispose();
-    upasswordController.dispose();
-    uemailController.dispose();
-    umobilenoController.dispose();
     super.dispose();
-  }
-
-  void clearError() {
-    if (_errorMessage != null) {
-      setState(() {
-        // Reset error message when user starts typing
-        _errorMessage = null;
-      });
-    }
   }
 
   _onPressed(){
     setState(() {
-      if(ufirstnameController.text.trim().isNotEmpty &&
-          ulastnameController.text.trim().isNotEmpty &&
-          uusernameController.text.trim().toLowerCase().isNotEmpty &&
-          uemailController.text.trim().toLowerCase().isNotEmpty &&
-          upasswordController.text.trim().isNotEmpty &&
-          umobilenoController.text.trim().isNotEmpty){
-        databaseHelper.registerData(
-            ufirstnameController.text.trim(),
-            ulastnameController.text.trim(),
-            uusernameController.text.trim().toLowerCase(),
-            uemailController.text.trim().toLowerCase(),
-            upasswordController.text.trim(),
-            umobilenoController.text.trim())
+      if(_ufirstnameController.text.trim().isNotEmpty &&
+          _ulastnameController.text.trim().isNotEmpty &&
+          _uusernameController.text.trim().isNotEmpty &&
+          _uemailController.text.trim().isNotEmpty &&
+          _upasswordController.text.trim().isNotEmpty &&
+          _umobilenoController.text.trim().isNotEmpty){
+        databaseHelper.register(
+            _ufirstnameController.text,
+            _ulastnameController.text,
+            _uusernameController.text,
+            _uemailController.text,
+            _upasswordController.text,
+            _umobilenoController.text)
             .whenComplete((){
           if(databaseHelper.status){
             _showDialog();
@@ -84,26 +61,12 @@ class _RegisterPageState extends State<RegisterPage> {
             print("error!!");
           }else{
             _showAgreementDialog();
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => DashboardPage()));
+            print("DONE!!");
+            Navigator.pushReplacementNamed(context, '/dashboard');
           }
         });
       }
     });
-  }
-
-
-  String emailValidator(String value) {
-    // Pattern pattern =
-    //     r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$';
-    RegExp regex = new RegExp(r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$');
-    if (!regex.hasMatch(value) || value.isEmpty) {
-      return 'Email format is invalid';
-    } else {
-      return "";
-    }
   }
 
   @override
@@ -164,19 +127,18 @@ class _RegisterPageState extends State<RegisterPage> {
                   ],
                 ),
                 Form(
-                  key: _registerFormKey,
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 40),
                     child: Column(
                       children: <Widget>[
                         FadeAnimation(0.6, TextFormField(
-                          controller: ufirstnameController,
-                          validator: (value) {
-                            if (value != null && value.isEmpty) {
-                              return 'Enter First Name';
-                            }
-                            return null;
-                          },
+                          controller: _ufirstnameController,
+                          // validator: (value) {
+                          //   // if (value != null && value.isEmpty) {
+                          //   //   return 'Enter First Name';
+                          //   // }
+                          //   return null;
+                          // },
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             labelText: 'First Name',
@@ -199,13 +161,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),),
                         SizedBox(height: 20.0,),
                         FadeAnimation(0.8, TextFormField(
-                          controller: ulastnameController,
-                          validator: (value) {
-                            if (value != null && value.isEmpty) {
-                              return 'Enter Last Name';
-                            }
-                            return null;
-                          },
+                          controller: _ulastnameController,
+                          // validator: (value) {
+                          //   // if (value != null && value.isEmpty) {
+                          //   //   return 'Enter Last Name';
+                          //   // }
+                          //   return null;
+                          // },
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             labelText: 'Last Name',
@@ -228,13 +190,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),),
                         SizedBox(height: 20.0,),
                         FadeAnimation(1.0, TextFormField(
-                          controller: uusernameController,
-                          validator: (value) {
-                            if (value!.isEmpty && value.length > 8 && value.length < 8 && !value.contains("W")) {
-                            return 'Enter valid Student ID';
-                            }
-                            return null;
-                          },
+                          controller: _uusernameController,
+                          // validator: (value) {
+                          //   // if (value!.isEmpty && value.length > 8 && value.length < 8 && !value.contains("W")) {
+                          //   // return 'Enter valid Student ID';
+                          //   // }
+                          //   return null;
+                          // },
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             labelText: 'SCU Student ID',
@@ -258,14 +220,14 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),),
                         SizedBox(height: 20.0,),
                         FadeAnimation(1.2, TextFormField(
-                          controller: upasswordController,
-                          validator: (value) {
-                            if (value!.length < 10 || value.isEmpty) {
-                              return 'Password must be longer than 10 characters';
-                            } else {
-                              return null;
-                            }
-                          },
+                          controller: _upasswordController,
+                          // validator: (value) {
+                          //   if (value!.isEmpty) {
+                          //     return 'Password must be longer than 10 characters';
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: true,
                           decoration: InputDecoration(
@@ -292,17 +254,14 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),),
                         SizedBox(height: 20.0,),
                         FadeAnimation(1.4, TextFormField(
-                          controller: uemailController,
-                          validator: (value) {
-                            // Pattern pattern =
-                            //     r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$';
-                            // RegExp regex = new RegExp(pattern);
-                            if (value!.isEmpty && !value.contains('@scu.edu')) {
-                              return 'Email format is invalid';
-                            } else {
-                              return null;
-                            };
-                          },
+                          controller: _uemailController,
+                          // validator: (value) {
+                          //   // if (value!.isEmpty && !value.contains('@scu.edu')) {
+                          //   //   return 'Email format is invalid';
+                          //   // } else {
+                          //     return null;
+                          //   // };
+                          // },
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             labelText: "Email",
@@ -316,16 +275,15 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),),
                         SizedBox(height: 20.0,),
                         FadeAnimation(1.6, TextFormField(
-                          controller: umobilenoController,
-                          validator: (value) {
-                            if (value!.length < 10 || value.isEmpty) {
-                              return 'mobile number must have 10 digits';
-                            } else {
-                              return null;
-                            }
-                          },
+                          controller: _umobilenoController,
+                          // validator: (value) {
+                          //   // if (value!.length < 10 || value.isEmpty) {
+                          //   //   return 'mobile number must have 10 digits';
+                          //   // } else {
+                          //     return null;
+                          //   // }
+                          // },
                           keyboardType: TextInputType.phone,
-                          obscureText: true,
                           decoration: InputDecoration(
                             hintText: 'Ex. 6697664555',
                             labelText: "Mobile Number",
@@ -378,17 +336,17 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 10.0,),
+                SizedBox(height: 20.0,),
                 Container(
                   height: 20,
                   child: new Text(
                     '$msgStatus',
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 18),
                   ),
                 ),
-                SizedBox(height: 30.0,),
+                SizedBox(height: 20.0,),
                 FadeAnimation(2.0,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

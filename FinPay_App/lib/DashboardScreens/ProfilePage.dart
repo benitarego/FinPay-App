@@ -117,10 +117,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                           iconSize: 25,
                                           onPressed: () {
                                             Navigator.pop(context);
-                                            // _ufullnameController.clear(); _udescController.clear(); _umobilenumberController.clear();
-                                            // _ulocationController.clear(); _uemailController.clear(); _uwebsiteController.clear();
-                                            // _ufacebookController.clear(); _ugithubController.clear(); _ulinkedinController.clear();
-                                            // _uinstagramController.clear(); _utwitterController.clear();
+                                            ufirstnameController.clear(); ulastnameController.clear(); uusernameController.clear();
+                                            upasswordController.clear(); uemailController.clear(); umobilenoController.clear();
                                           }
                                       ),
                                       title: Text('Edit Profile', style: TextStyle(color: kThemeColor, fontSize: 20),),
@@ -163,6 +161,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                             //   });
                                             //   _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text('Profile updated successfully!')));
                                             // }
+                                            final snackBar = SnackBar(
+                                              content: const Text('Updated successfully!'),
+                                              duration: Duration(seconds: 2, milliseconds: 500),
+                                            );
+                                            loading ? Loading() : ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                           }
                                       ),
                                     ),
@@ -275,8 +278,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                                               autofocus: true,
                                                               decoration: InputDecoration(
                                                                 prefixIcon: Icon(Icons.attach_money_rounded, size: 20,),
-                                                                labelText: 'Enter Amount',
-                                                                hintText: 'Ex. 123.45',
+                                                                labelText: 'Enter 6-Digit Passcode',
+                                                                hintText: 'Ex. 123456',
                                                                 errorText: isANumber ? null : "Please enter a number",
                                                               ),
                                                               keyboardType: TextInputType.number,
@@ -295,6 +298,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                                           child: Text('Ok'),
                                                           onPressed: () {
                                                             Navigator.of(context).pop();
+                                                            final snackBar = SnackBar(
+                                                              content: const Text('Enabled 2FA successfully!'),
+                                                              duration: Duration(seconds: 2, milliseconds: 500),
+                                                            );
+                                                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                                           },
                                                         ),
                                                       ],
@@ -313,11 +321,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                             FloatingActionButton.extended(
                                               backgroundColor: Colors.black,
                                               onPressed: () {
+
                                                 final snackBar = SnackBar(
                                                   content: const Text('2FA verified successfully!'),
                                                   duration: Duration(seconds: 2, milliseconds: 500),
                                                 );
-                                                loading ? Loading() : ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                               },
                                               icon: Icon(
                                                 Icons.verified_user_rounded,
@@ -330,6 +339,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                             FloatingActionButton.extended(
                                               backgroundColor: Colors.black,
                                               onPressed: () {
+
                                                 final snackBar = SnackBar(
                                                   content: const Text('2FA deleted successfully!'),
                                                   duration: Duration(seconds: 2, milliseconds: 500),

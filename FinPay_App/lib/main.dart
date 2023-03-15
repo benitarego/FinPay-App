@@ -2,6 +2,7 @@ import 'package:FinPay/RegisterPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:FinPay/DashboardPage.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,6 +14,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: new SplashScreen(),
+      routes: <String,WidgetBuilder>{
+        '/dashboard' : (BuildContext context) => new DashboardPage(),
+      },
     );
   }
 }

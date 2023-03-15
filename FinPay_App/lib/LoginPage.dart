@@ -32,22 +32,22 @@ class _LoginPageState extends State<LoginPage> {
 
   _onPressed() {
     setState(() {
-      // if(uusernameController.text.trim().toLowerCase().isNotEmpty &&
-      //     upasswordController.text.trim().isNotEmpty ){
-      //   databaseHelper.loginData(uusernameController.text.trim().toLowerCase(),
-      //       upasswordController.text.trim()).whenComplete((){
-      //     if(databaseHelper.status){
-      //       _showDialog();
-      //       msgStatus = 'Check email or password';
-      //       print("error!!");
-      //     }else{
+      if(uusernameController.text.trim().isNotEmpty &&
+          upasswordController.text.trim().isNotEmpty){
+        databaseHelper.loginData(uusernameController.text.trim(),
+            upasswordController.text.trim()).whenComplete((){
+          if(databaseHelper.status){
+            _showDialog();
+            msgStatus = 'Check email or password';
+            print("error!!");
+          }else{
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                     builder: (context) => DashboardPage()));
-      //     }
-      //   });
-      // }
+          }
+        });
+      }
     });
   }
 
