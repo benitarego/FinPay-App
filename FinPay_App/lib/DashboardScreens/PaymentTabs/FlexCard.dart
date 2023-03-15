@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:FinPay/ThemeColor.dart';
 import 'package:FinPay/DashboardScreens/PaymentTabs/TransferSuccess.dart';
 import 'package:FinPay/FadeAnimation.dart';
+import 'package:FinPay/DashboardPage.dart';
 
 class FlexCard extends StatefulWidget {
   const FlexCard({Key? key}) : super(key: key);
@@ -16,9 +17,9 @@ class _FlexCardState extends State<FlexCard> {
   ScrollController _scrollController = new ScrollController();
   Color _iconColor = Colors.yellow;
 
-  final TextEditingController umoneycontroller = new TextEditingController();
-  final TextEditingController uusernamecontroller = new TextEditingController();
-  final TextEditingController up2pmoneycontroller = new TextEditingController();
+  final TextEditingController _umoneycontroller = new TextEditingController();
+  final TextEditingController _uusernamecontroller = new TextEditingController();
+  final TextEditingController _up2pmoneycontroller = new TextEditingController();
 
   bool loading = false;
 
@@ -32,6 +33,9 @@ class _FlexCardState extends State<FlexCard> {
   @override
   void dispose() {
     _scrollController.dispose();
+    _umoneycontroller.dispose();
+    _uusernamecontroller.dispose();
+    _up2pmoneycontroller.dispose();
     super.dispose();
   }
 
@@ -61,7 +65,7 @@ class _FlexCardState extends State<FlexCard> {
                         trailing: Container(
                           padding: EdgeInsets.all(10),
                           // alignment: Alignment.center,
-                          child: Text("USD 0.00", style: TextStyle(color: Colors.greenAccent, fontSize: 25, fontWeight: FontWeight.w600),)
+                          child: Text("", style: TextStyle(color: Colors.greenAccent, fontSize: 25, fontWeight: FontWeight.w600),)
                         ),
                       ),
                     ],
@@ -89,7 +93,7 @@ class _FlexCardState extends State<FlexCard> {
                                             iconSize: 25,
                                             onPressed: () {
                                               Navigator.pop(context);
-                                              umoneycontroller.clear();
+                                              _umoneycontroller.clear();
                                             }
                                         ),
                                         title: Text('Deposit Points', style: TextStyle(color: kThemeColor, fontSize: 20),),
@@ -98,31 +102,11 @@ class _FlexCardState extends State<FlexCard> {
                                             iconSize: 25,
                                             onPressed: () {
                                               final snackBar = SnackBar(
-                                                content: const Text('Points deposited successfully!'),
+                                                content: Text('${_umoneycontroller.text} points deposited successfully!'),
                                                 duration: Duration(seconds: 2, milliseconds: 500),
                                               );
                                               loading ? Loading() : ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                               Navigator.pop(context);
-                                              // if (_ufullnameController.text.isNotEmpty) {
-                                              //   Firestore.instance
-                                              //       .collection("Users")
-                                              //       .document(currentUser.uid)
-                                              //       .setData({
-                                              //     "uid": currentUser.uid,
-                                              //     "fullname": _ufullnameController.text,
-                                              //   })
-                                              //       .then((result) => {
-                                              //     print('successfully updated'),
-                                              //     Navigator.pop(context),
-                                              //   })
-                                              //       .catchError((e) => {
-                                              //     print(e),
-                                              //     showDialog(context: context,
-                                              //         child: AlertDialog(
-                                              //           title: Text('Update something'),
-                                              //         ))
-                                              //   });
-                                              // }
                                             }
                                         ),
                                       ),
@@ -133,12 +117,12 @@ class _FlexCardState extends State<FlexCard> {
                                             children: <Widget>[
                                               TextField(
                                                 autofocus: true,
-                                                controller: umoneycontroller,
+                                                controller: _umoneycontroller,
                                                 decoration: InputDecoration(
                                                   prefixIcon: Icon(Icons.attach_money_rounded, size: 20,),
                                                   labelText: 'Enter Amount',
                                                   hintText: 'Ex. 123.45',
-                                                  errorText: isANumber ? null : "Please enter a number",
+                                                  errorText: "Please enter a number",
                                                 ),
                                                 keyboardType: TextInputType.number,
                                               ),
@@ -196,10 +180,8 @@ class _FlexCardState extends State<FlexCard> {
                                             iconSize: 25,
                                             onPressed: () {
                                               Navigator.pop(context);
-                                              // _ufullnameController.clear(); _udescController.clear(); _umobilenumberController.clear();
-                                              // _ulocationController.clear(); _uemailController.clear(); _uwebsiteController.clear();
-                                              // _ufacebookController.clear(); _ugithubController.clear(); _ulinkedinController.clear();
-                                              // _uinstagramController.clear(); _utwitterController.clear();
+                                              _uusernamecontroller.clear();
+                                              _up2pmoneycontroller.clear();
                                             }
                                         ),
                                         title: Text('P2P Transfer', style: TextStyle(color: kThemeColor, fontSize: 20),),
@@ -207,11 +189,7 @@ class _FlexCardState extends State<FlexCard> {
                                             icon: Icon(Icons.check, color: Colors.black,),
                                             iconSize: 25,
                                             onPressed: () {
-                                              Navigator.pop(context);
-                                              // if (_ufullnameController.text.isNotEmpty || _udescController.text.isNotEmpty || _umobilenumberController.text.isNotEmpty ||
-                                              //     _ulocationController.text.isNotEmpty || _uemailController.text.isNotEmpty || _uwebsiteController.text.isNotEmpty ||
-                                              //     _ufacebookController.text.isNotEmpty || _ugithubController.text.isNotEmpty || _ulinkedinController.text.isNotEmpty ||
-                                              //     _uinstagramController.text.isNotEmpty || _utwitterController.text.isNotEmpty) {
+                                              // if (_ufullnameController.text.isNotEmpty || _udescController.text.isNotEmpty || _umobilenumberController.text.isNotEmpty) {
                                               //   Firestore.instance
                                               //       .collection("Users")
                                               //       .document(currentUser.uid)
@@ -220,14 +198,6 @@ class _FlexCardState extends State<FlexCard> {
                                               //     "fullname": _ufullnameController.text,
                                               //     "udesc": _udescController.text,
                                               //     "umobilenumber": _umobilenumberController.text,
-                                              //     "ulocation": _ulocationController.text,
-                                              //     "uemail": _uemailController.text,
-                                              //     "uwebsite": _uwebsiteController.text,
-                                              //     "ufacebook": _ufacebookController.text,
-                                              //     "ugithub": _ugithubController.text,
-                                              //     "ulinkedin": _ulinkedinController.text,
-                                              //     "uinstagram": _uinstagramController.text,
-                                              //     "utwitter": _utwitterController.text,
                                               //   })
                                               //       .then((result) => {
                                               //     print('successfully updated'),
@@ -236,17 +206,17 @@ class _FlexCardState extends State<FlexCard> {
                                               //       .catchError((e) => {
                                               //     print(e),
                                               //     showDialog(context: context,
-                                              //         child: AlertDialog(
-                                              //           title: Text('Update something'),
+                                              //         child: AlertDialog(title: Text('Update something'),
                                               //         ))
                                               //   });
                                               //   _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text('Profile updated successfully!')));
                                               // }
                                               final snackBar = SnackBar(
-                                                content: const Text('P2P transferred successfully!'),
+                                                content: Text('${_up2pmoneycontroller.text} points transferred to ${_uusernamecontroller.text} successfully!'),
                                                 duration: Duration(seconds: 2, milliseconds: 500),
                                               );
                                               loading ? Loading() : ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                              Navigator.pop(context);
                                             }
                                         ),
                                       ),
@@ -257,23 +227,23 @@ class _FlexCardState extends State<FlexCard> {
                                             children: <Widget>[
                                               TextField(
                                                 autofocus: true,
-                                                controller: uusernamecontroller,
+                                                controller: _uusernamecontroller,
                                                 decoration: InputDecoration(
                                                   prefixIcon: Icon(Icons.person, size: 20,),
                                                   labelText: 'Enter username of peer',
-                                                  hintText: 'Ex. brego',
+                                                  hintText: 'Ex. W9876543',
                                                 ),
                                                 keyboardType: TextInputType.text,
                                               ),
                                               SizedBox(height: 10,),
                                               TextField(
                                                 autofocus: true,
-                                                controller: up2pmoneycontroller,
+                                                controller: _up2pmoneycontroller,
                                                 decoration: InputDecoration(
                                                   prefixIcon: Icon(Icons.attach_money_rounded, size: 20,),
                                                   labelText: 'Enter Amount to be transferred',
                                                   hintText: 'Ex. 123.45',
-                                                  errorText: isANumber ? null : "Please enter a number",
+                                                  errorText: "Please enter a number",
                                                 ),
                                                 keyboardType: TextInputType.number,
                                               ),
@@ -337,10 +307,7 @@ class _FlexCardState extends State<FlexCard> {
                                             iconSize: 25,
                                             onPressed: () {
                                               Navigator.pop(context);
-                                              // _ufullnameController.clear(); _udescController.clear(); _umobilenumberController.clear();
-                                              // _ulocationController.clear(); _uemailController.clear(); _uwebsiteController.clear();
-                                              // _ufacebookController.clear(); _ugithubController.clear(); _ulinkedinController.clear();
-                                              // _uinstagramController.clear(); _utwitterController.clear();
+                                              _umoneycontroller.clear();
                                             }
                                         ),
                                         title: Text('Withdraw Funds', style: TextStyle(color: kThemeColor, fontSize: 20),),
@@ -349,15 +316,12 @@ class _FlexCardState extends State<FlexCard> {
                                             iconSize: 25,
                                             onPressed: () {
                                               final snackBar = SnackBar(
-                                                content: const Text('Funds withdrawed successfully!'),
+                                                content: Text('${_umoneycontroller.text} points withdrawed successfully!'),
                                                 duration: Duration(seconds: 2, milliseconds: 500),
                                               );
                                               loading ? Loading() : ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                               Navigator.pop(context);
-                                              // if (_ufullnameController.text.isNotEmpty || _udescController.text.isNotEmpty || _umobilenumberController.text.isNotEmpty ||
-                                              //     _ulocationController.text.isNotEmpty || _uemailController.text.isNotEmpty || _uwebsiteController.text.isNotEmpty ||
-                                              //     _ufacebookController.text.isNotEmpty || _ugithubController.text.isNotEmpty || _ulinkedinController.text.isNotEmpty ||
-                                              //     _uinstagramController.text.isNotEmpty || _utwitterController.text.isNotEmpty) {
+                                              // if (_ufullnameController.text.isNotEmpty || _udescController.text.isNotEmpty || _umobilenumberController.text.isNotEmpty) {
                                               //   Firestore.instance
                                               //       .collection("Users")
                                               //       .document(currentUser.uid)
@@ -366,14 +330,6 @@ class _FlexCardState extends State<FlexCard> {
                                               //     "fullname": _ufullnameController.text,
                                               //     "udesc": _udescController.text,
                                               //     "umobilenumber": _umobilenumberController.text,
-                                              //     "ulocation": _ulocationController.text,
-                                              //     "uemail": _uemailController.text,
-                                              //     "uwebsite": _uwebsiteController.text,
-                                              //     "ufacebook": _ufacebookController.text,
-                                              //     "ugithub": _ugithubController.text,
-                                              //     "ulinkedin": _ulinkedinController.text,
-                                              //     "uinstagram": _uinstagramController.text,
-                                              //     "utwitter": _utwitterController.text,
                                               //   })
                                               //       .then((result) => {
                                               //     print('successfully updated'),
@@ -398,6 +354,7 @@ class _FlexCardState extends State<FlexCard> {
                                             children: <Widget>[
                                               TextField(
                                                 autofocus: true,
+                                                controller: _umoneycontroller,
                                                 decoration: InputDecoration(
                                                   prefixIcon: Icon(Icons.attach_money_rounded, size: 20,),
                                                   labelText: 'Enter Amount to be withdrawed',
@@ -472,10 +429,7 @@ class _FlexCardState extends State<FlexCard> {
                                             iconSize: 25,
                                             onPressed: () {
                                               Navigator.pop(context);
-                                              // if (_ufullnameController.text.isNotEmpty || _udescController.text.isNotEmpty || _umobilenumberController.text.isNotEmpty ||
-                                              //     _ulocationController.text.isNotEmpty || _uemailController.text.isNotEmpty || _uwebsiteController.text.isNotEmpty ||
-                                              //     _ufacebookController.text.isNotEmpty || _ugithubController.text.isNotEmpty || _ulinkedinController.text.isNotEmpty ||
-                                              //     _uinstagramController.text.isNotEmpty || _utwitterController.text.isNotEmpty) {
+                                              // if (_ufullnameController.text.isNotEmpty || _udescController.text.isNotEmpty || _umobilenumberController.text.isNotEmpty) {
                                               //   Firestore.instance
                                               //       .collection("Users")
                                               //       .document(currentUser.uid)
@@ -484,14 +438,6 @@ class _FlexCardState extends State<FlexCard> {
                                               //     "fullname": _ufullnameController.text,
                                               //     "udesc": _udescController.text,
                                               //     "umobilenumber": _umobilenumberController.text,
-                                              //     "ulocation": _ulocationController.text,
-                                              //     "uemail": _uemailController.text,
-                                              //     "uwebsite": _uwebsiteController.text,
-                                              //     "ufacebook": _ufacebookController.text,
-                                              //     "ugithub": _ugithubController.text,
-                                              //     "ulinkedin": _ulinkedinController.text,
-                                              //     "uinstagram": _uinstagramController.text,
-                                              //     "utwitter": _utwitterController.text,
                                               //   })
                                               //       .then((result) => {
                                               //     print('successfully updated'),

@@ -30,7 +30,18 @@ class _HomePageState extends State<HomePage> {
   DatabaseHelper databaseHelper = new DatabaseHelper();
   String msgStatus = '';
 
-  // List data = [];
+  List<UserList> data = [
+    UserList(username: 'W1000001', firstName: 'bucky', lastName: 'bronco', email: 'bbronco1@scu.edu', mobile: '1231231231'),
+    UserList(username: 'W1000002', firstName: 'bucky', lastName: 'bronco', email: 'bbronco2@scu.edu', mobile: '1231231232'),
+    UserList(username: 'W1000003', firstName: 'bucky', lastName: 'bronco', email: 'bbronco3@scu.edu', mobile: '1231231233'),
+    UserList(username: 'W1765843', firstName: 'Benita', lastName: 'Rego', email: 'brego@scu.edu', mobile: '9876785643'),
+    UserList(username: 'W7658432', firstName: 'Nolita', lastName: 'Rego', email: 'nrego@scu.edu', mobile: '9988776655'),
+    UserList(username: 'W1877554', firstName: 'naina', lastName: 'sharma', email: 'nsharma@scu.edu', mobile: '8877440022'),
+    UserList(username: 'W9944667', firstName: 'bunny', lastName: 'Yu',email: 'byu@scu.edu',  mobile: '8877447711'),
+    UserList(username: 'W8802413', firstName: 'Rohit', lastName: 'Mehra', email: 'rmehra@scu.edu', mobile: '9892348621'),
+    UserList(username: 'W9988003', firstName: 'Kabir', lastName: 'Singh', email: 'ksingh@scu.edu', mobile: '6698742309'),
+
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -91,273 +102,97 @@ class _HomePageState extends State<HomePage> {
         ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
+        padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
         child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget> [
-              Container(
-                padding: EdgeInsets.all(10),
-                height: MediaQuery.of(context).size.height*2,
-                child: ListView.builder(
-                    itemCount: databaseHelper.data.length == 0 ? 0 : databaseHelper.data.length,
-                    itemBuilder: (ctx, i) {
-                      return Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        color: kContainerColor,
-                        elevation: 2.0,
-                        child: Column(
-                          children: <Widget>[
-                            ListTile(
-                              title: Text(
-                                "${databaseHelper.data[i]["username"]}",
-                                style: TextStyle(fontSize: 20.0),
-                              ),
-                              subtitle: Column(
-                                children: <Widget>[
-                                  Text(
-                                    "${databaseHelper.data[i]["email"]}",
-                                    style: TextStyle(fontSize: 15.0),
-                                  ),
-                                  SizedBox(height: 5,),
-                                  Text(
-                                    "${databaseHelper.data[i]["mobilenumber"]}",
-                                    style: TextStyle(fontSize: 15.0),
-                                  ),
-                                ],
-                              ),
-                              leading: CircleAvatar(
-                                backgroundImage: AssetImage(""),
-                              ),
-                            ),
-                            Divider()
-                          ],
-                        ),
-                      );
-                    }
-                ),
-              ),
-              // TRANSFER FUNDS, REQUEST FUNDS
-              FadeAnimation(0.7, Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              Text("Welcome to", style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),),
+              SizedBox(height: 10,),
+              Row(
                 children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      showModalBottomSheet(
-                          context: context,
-                          builder: (context) {
-                            return Container(
-                                height: 900,
-                                padding: EdgeInsets.only(top: 10, bottom: 30),
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    children: <Widget>[
-                                      ListTile(
-                                        leading: IconButton(
-                                            icon: Icon(Icons.clear, color: Colors.black,),
-                                            iconSize: 25,
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                              // _ufullnameController.clear(); _udescController.clear(); _umobilenumberController.clear();
-                                              // _ulocationController.clear(); _uemailController.clear(); _uwebsiteController.clear();
-                                              // _ufacebookController.clear(); _ugithubController.clear(); _ulinkedinController.clear();
-                                              // _uinstagramController.clear(); _utwitterController.clear();
-                                            }
-                                        ),
-                                        title: Text('Add Funds', style: TextStyle(color: kThemeColor, fontSize: 20),),
-                                        trailing: IconButton(
-                                            icon: Icon(Icons.check, color: Colors.black,),
-                                            iconSize: 25,
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                              // if (_ufullnameController.text.isNotEmpty || _udescController.text.isNotEmpty || _umobilenumberController.text.isNotEmpty ||
-                                              //     _ulocationController.text.isNotEmpty || _uemailController.text.isNotEmpty || _uwebsiteController.text.isNotEmpty ||
-                                              //     _ufacebookController.text.isNotEmpty || _ugithubController.text.isNotEmpty || _ulinkedinController.text.isNotEmpty ||
-                                              //     _uinstagramController.text.isNotEmpty || _utwitterController.text.isNotEmpty) {
-                                              //   Firestore.instance
-                                              //       .collection("Users")
-                                              //       .document(currentUser.uid)
-                                              //       .setData({
-                                              //     "uid": currentUser.uid,
-                                              //     "fullname": _ufullnameController.text,
-                                              //     "udesc": _udescController.text,
-                                              //     "umobilenumber": _umobilenumberController.text,
-                                              //     "ulocation": _ulocationController.text,
-                                              //     "uemail": _uemailController.text,
-                                              //     "uwebsite": _uwebsiteController.text,
-                                              //     "ufacebook": _ufacebookController.text,
-                                              //     "ugithub": _ugithubController.text,
-                                              //     "ulinkedin": _ulinkedinController.text,
-                                              //     "uinstagram": _uinstagramController.text,
-                                              //     "utwitter": _utwitterController.text,
-                                              //   })
-                                              //       .then((result) => {
-                                              //     print('successfully updated'),
-                                              //     Navigator.pop(context),
-                                              //   })
-                                              //       .catchError((e) => {
-                                              //     print(e),
-                                              //     showDialog(context: context,
-                                              //         child: AlertDialog(
-                                              //           title: Text('Update something'),
-                                              //         ))
-                                              //   });
-                                              //   _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text('Profile updated successfully!')));
-                                              // }
-                                            }
-                                        ),
+                  Text("Flex", style: TextStyle(color: kThemeColor, fontSize: 30, fontWeight: FontWeight.bold),),
+                  SizedBox(width: 0,),
+                  Text("Pay!", style: TextStyle(color: kYellowColor, fontSize: 30, fontWeight: FontWeight.bold),),
+                ],
+              ),
+              SizedBox(height: 10,),
+              SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      height: MediaQuery.of(context).size.height*2,
+                      child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          itemCount: data.length,
+                          itemBuilder: (ctx, i) {
+                            return GestureDetector(
+                              onTap: () {},
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                color: kContainerColor,
+                                child: Column(
+                                  children: <Widget>[
+                                    ListTile(
+                                      title: Text(
+                                        "${data[i].firstName} ${data[i].lastName}",
+                                        style: TextStyle(fontSize: 20.0),
                                       ),
-                                      SizedBox(height: 10,),
-                                      Padding(
-                                          padding: EdgeInsets.only(top:20, bottom: 20, left: 20, right: 20),
-                                          child: Column(
-                                            children: <Widget>[
-                                              TextField(
-                                                autofocus: true,
-                                                decoration: InputDecoration(
-                                                  prefixIcon: Icon(Icons.attach_money_rounded, size: 20,),
-                                                  labelText: 'Enter Amount',
-                                                  hintText: 'Ex. 123.45',
-                                                  errorText: isANumber ? null : "Please enter a number",
-                                                ),
-                                                keyboardType: TextInputType.number,
-                                              ),
-                                            ],
-                                          )
-                                      )
-                                    ],
-                                  ),
-                                )
+                                      trailing: Text(
+                                        "${data[i].username}",
+                                        style: TextStyle(fontSize: 15.0),
+                                      ),
+                                      subtitle: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          SizedBox(height: 5,),
+                                          Text(
+                                            "${data[i].email}",
+                                            style: TextStyle(fontSize: 15.0),
+                                          ),
+                                          Text(
+                                            "${data[i].mobile}",
+                                            style: TextStyle(fontSize: 15.0),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             );
                           }
-                      );
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(15),
-                      height: 110,
-                      width: 160,
-                      decoration: BoxDecoration(
-                        color: kContainerColor,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: kYellowColor,
-                            ),
-                            child: Icon(Icons.check_circle, color: Colors.black,),
-                          ),
-                          SizedBox(height: 20,),
-                          Text("Transfer Funds", style: TextStyle(fontSize: 18),)
-                        ],
                       ),
                     ),
-                  ),
-                  SizedBox(width: 10,),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      padding: EdgeInsets.all(15),
-                      height: 110,
-                      width: 160,
-                      decoration: BoxDecoration(
-                        color: kContainerColor,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: kYellowColor,
-                            ),
-                            child: Icon(Icons.monetization_on, color: Colors.black,),
-                          ),
-                          SizedBox(height: 20,),
-                          Text("Request Funds", style: TextStyle(fontSize: 18),)
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),),
-              SizedBox(height: 10,),
-              // WITHDRAW FUNDS, GET STATEMENT
-              FadeAnimation(0.9, Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      padding: EdgeInsets.all(15),
-                      height: 110,
-                      width: 160,
-                      decoration: BoxDecoration(
-                        color: kContainerColor,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: kYellowColor,
-                            ),
-                            child: Icon(Icons.published_with_changes_rounded, color: Colors.black,),
-                          ),
-                          SizedBox(height: 20,),
-                          Text("Withdraw Funds", style: TextStyle(fontSize: 18),)
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 10,),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      padding: EdgeInsets.all(15),
-                      height: 110,
-                      width: 160,
-                      decoration: BoxDecoration(
-                        color: kContainerColor,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: kYellowColor,
-                            ),
-                            child: Icon(Icons.assignment_rounded, color: Colors.black,),
-                          ),
-                          SizedBox(height: 20,),
-                          Text("Get Statement", style: TextStyle(fontSize: 18),)
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),),
-              SizedBox(height: 30,),
-              FadeAnimation(1.1, Text("For adding, withdrawing, requesting money, your balance will reflect transactions that have not yet been posted to your acount. For checking funds, the balance will reflect the lastest update as per transactions.", style: TextStyle(color: Colors.grey),)),
+                    SizedBox(height: 30,),
+                    FadeAnimation(1.1, Text("For adding, withdrawing, requesting money, your balance will reflect transactions that have not yet been posted to your acount. For checking funds, the balance will reflect the lastest update as per transactions.", style: TextStyle(color: Colors.grey),)),
+                  ],
+                ),
+              )
             ]
         ),
       )
     );
   }
+}
+
+class UserList {
+  final String username;
+  final String firstName;
+  final String lastName;
+  final String email;
+  final String mobile;
+
+  UserList({
+    required this.username,
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.mobile
+  });
 }
 

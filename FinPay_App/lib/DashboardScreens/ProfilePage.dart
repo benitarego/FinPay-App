@@ -95,7 +95,14 @@ class _ProfilePageState extends State<ProfilePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 SizedBox(height: 10,),
-                ProfileCard(),
+                ProfileCard(
+                  uemail: uemailController.text.toString(),
+                  ufirstname: ufirstnameController.text.toString(),
+                  ulastname: ulastnameController.text.toString(),
+                  umobilenumber: umobilenoController.text.toString(),
+                  uusername: uusernameController.text.toString(),
+                  uimg: '',
+                ),
                 SizedBox(height: 20,),
                 Divider(height: 10,),
                 SizedBox(height: 20,),
@@ -321,7 +328,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                             FloatingActionButton.extended(
                                               backgroundColor: Colors.black,
                                               onPressed: () {
-
                                                 final snackBar = SnackBar(
                                                   content: const Text('2FA verified successfully!'),
                                                   duration: Duration(seconds: 2, milliseconds: 500),
@@ -419,20 +425,20 @@ class _ProfilePageState extends State<ProfilePage> {
 
 class ProfileCard extends StatelessWidget {
   ProfileCard({
-    @required this.ufirstname,
-    this.ulastname,
-    this.uusername,
-    this.uemail,
-    this.umobilenumber,
-    this.uimg
+    required this.ufirstname,
+    required this.ulastname,
+    required this.uusername,
+    required this.uemail,
+    required this.umobilenumber,
+    required this.uimg
   });
 
-  final ufirstname;
-  final ulastname;
-  final uusername;
-  final uemail;
-  final umobilenumber;
-  final uimg;
+  final String ufirstname;
+  final String ulastname;
+  final String uusername;
+  final String uemail;
+  final String umobilenumber;
+  final String uimg;
 
   @override
   Widget build(BuildContext context) {
@@ -446,7 +452,7 @@ class ProfileCard extends StatelessWidget {
             maxRadius: 50,
           ),),
           SizedBox(height: 20,),
-          FadeAnimation(0.4, Text("Jack Doe", textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 28.0),),),
+          FadeAnimation(0.4, Text(ufirstname, textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 28.0),),),
           SizedBox(height: 10,),
           FadeAnimation(0.6, Text("@jackdoe", style: TextStyle(color: kThemeColor, fontWeight: FontWeight.w300, fontSize: 17.0),),),
           SizedBox(height: 15,),

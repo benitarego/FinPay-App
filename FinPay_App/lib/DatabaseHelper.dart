@@ -12,7 +12,7 @@ class DatabaseHelper {
   var token = "";
 
   loginData(String username, String password) async {
-    final response = await http.post(Uri.parse('https://4e74-67-161-99-88.ngrok.io/api/users/login'),
+    final response = await http.post(Uri.parse('https://dronaji.in/api/users/login'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -38,7 +38,6 @@ class DatabaseHelper {
     final response = await http.post(Uri.parse('https://4e74-67-161-99-88.ngrok.io/api/users/register'),
         headers: {
           'Content-Type': 'application/json',
-          "Authorization": 'Basic $token',
         },
         body: json.encode({
           "user": {
@@ -95,7 +94,9 @@ class DatabaseHelper {
     // }
   }
 
-  List data = [];
+  List data = [
+
+  ];
 
   Future<String> getUsers() async {
     var response = await http.get(

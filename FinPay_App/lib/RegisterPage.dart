@@ -62,7 +62,7 @@ class _RegisterPageState extends State<RegisterPage> {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => DashboardPage(title: databaseHelper.token)));
+                    builder: (context) => DashboardPage()));
 
           }else{
             _showDialog();
