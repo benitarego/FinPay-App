@@ -442,20 +442,20 @@ class ProfileCard extends StatelessWidget {
       child: Column(
         children: <Widget>[
           FadeAnimation(0.3, CircleAvatar(
-            backgroundImage: NetworkImage("https://randomuser.me/api/portraits/men/5.jpg"),
+            backgroundImage: AssetImage("assets/SCU.png"),
             maxRadius: 50,
           ),),
           SizedBox(height: 20,),
-          FadeAnimation(0.4, Text("Jack Doe", textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 28.0),),),
+          FadeAnimation(0.4, Text("Benita Rego", textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 28.0),),),
           SizedBox(height: 10,),
-          FadeAnimation(0.6, Text("@jackdoe", style: TextStyle(color: kThemeColor, fontWeight: FontWeight.w300, fontSize: 17.0),),),
+          FadeAnimation(0.6, Text("W1628656", style: TextStyle(color: kThemeColor, fontWeight: FontWeight.w300, fontSize: 17.0),),),
           SizedBox(height: 15,),
           FadeAnimation(0.8, Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Icon(Icons.email, size: 20.0, color: Colors.black,),
               SizedBox(width: 10.0,),
-              Text("jackdoe@test.com", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w400, fontSize: 18.0),)
+              Text("brego@scu.edu", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w400, fontSize: 18.0),)
             ],
           ),),
           SizedBox(height: 15,),
@@ -464,7 +464,7 @@ class ProfileCard extends StatelessWidget {
             children: <Widget>[
               Icon(Icons.phone, size: 20.0, color: Colors.black,),
               SizedBox(width: 10.0,),
-              Text("+91 9988776655", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w400, fontSize: 18.0),)
+              Text("6693881662", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w400, fontSize: 18.0),)
             ],
           ),),
           SizedBox(height: 15,),
@@ -473,7 +473,7 @@ class ProfileCard extends StatelessWidget {
             children: <Widget>[
               Text("Currency: ", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w400, fontSize: 18.0),),
               SizedBox(width: 5.0,),
-              Text("INR", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 18.0),)
+              Text("USD", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 18.0),)
             ],),
           ),
         ],

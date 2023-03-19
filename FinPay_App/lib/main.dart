@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: new SplashScreen(),
       routes: <String,WidgetBuilder>{
-        '/dashboard' : (BuildContext context) => new DashboardPage(),
+        '/dashboard' : (BuildContext context) => const DashboardPage(),
       },
     );
   }

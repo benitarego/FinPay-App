@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:FinPay/ThemeColor.dart';
 import 'package:FinPay/DashboardScreens/PaymentTabs/TransferSuccess.dart';
 import 'package:FinPay/FadeAnimation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../DatabaseHelper.dart';
 
 class FlexCard extends StatefulWidget {
   const FlexCard({Key? key}) : super(key: key);
@@ -24,8 +27,25 @@ class _FlexCardState extends State<FlexCard> {
 
   bool isANumber = true;
 
+  var amountDeposit = 100;
+  var username = "";
+  var password = "";
+
+  DatabaseHelper databaseHelper =  DatabaseHelper();
+
+  Future<void> getUsernamePassword() async{
+    final prefs = await SharedPreferences.getInstance();
+    final String username = prefs.getString('username');
+    final String password = prefs.getString('password');
+    setState(() {
+      this.username = username;
+      this.password = password;
+    });
+  }
+
   @override
   void initState() {
+    // getUsernamePassword();
     super.initState();
   }
 
@@ -33,6 +53,27 @@ class _FlexCardState extends State<FlexCard> {
   void dispose() {
     _scrollController.dispose();
     super.dispose();
+  }
+
+  void deposit() {
+    getUsernamePassword().then((_){
+      
+      databaseHelper.deposit(username, username, int.parse(umoneycontroller.text), username, password);
+    });
+  }
+
+  void withdraw() {
+    getUsernamePassword().then((_){
+
+      databaseHelper.withdraw(username,username, int.parse(umoneycontroller.text), username, password);
+    });
+  }
+
+  void p2p() {
+    getUsernamePassword().then((_){
+
+      databaseHelper.p2p(username, uusernamecontroller.text, int.parse(umoneycontroller.text), username, password);
+    });
   }
 
   @override
@@ -61,7 +102,7 @@ class _FlexCardState extends State<FlexCard> {
                         trailing: Container(
                           padding: EdgeInsets.all(10),
                           // alignment: Alignment.center,
-                          child: Text("USD 0.00", style: TextStyle(color: Colors.greenAccent, fontSize: 25, fontWeight: FontWeight.w600),)
+                          child: Text("", style: TextStyle(color: Colors.greenAccent, fontSize: 25, fontWeight: FontWeight.w600),)
                         ),
                       ),
                     ],
@@ -97,32 +138,13 @@ class _FlexCardState extends State<FlexCard> {
                                             icon: Icon(Icons.check, color: Colors.black,),
                                             iconSize: 25,
                                             onPressed: () {
+                                              deposit();
                                               final snackBar = SnackBar(
-                                                content: const Text('Points deposited successfully!'),
+                                                content: Text('${umoneycontroller.text} points deposited successfully!'),
                                                 duration: Duration(seconds: 2, milliseconds: 500),
                                               );
                                               loading ? Loading() : ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                               Navigator.pop(context);
-                                              // if (_ufullnameController.text.isNotEmpty) {
-                                              //   Firestore.instance
-                                              //       .collection("Users")
-                                              //       .document(currentUser.uid)
-                                              //       .setData({
-                                              //     "uid": currentUser.uid,
-                                              //     "fullname": _ufullnameController.text,
-                                              //   })
-                                              //       .then((result) => {
-                                              //     print('successfully updated'),
-                                              //     Navigator.pop(context),
-                                              //   })
-                                              //       .catchError((e) => {
-                                              //     print(e),
-                                              //     showDialog(context: context,
-                                              //         child: AlertDialog(
-                                              //           title: Text('Update something'),
-                                              //         ))
-                                              //   });
-                                              // }
                                             }
                                         ),
                                       ),
@@ -138,7 +160,7 @@ class _FlexCardState extends State<FlexCard> {
                                                   prefixIcon: Icon(Icons.attach_money_rounded, size: 20,),
                                                   labelText: 'Enter Amount',
                                                   hintText: 'Ex. 123.45',
-                                                  errorText: isANumber ? null : "Please enter a number",
+                                                  errorText: "Please enter a number",
                                                 ),
                                                 keyboardType: TextInputType.number,
                                               ),
@@ -207,46 +229,13 @@ class _FlexCardState extends State<FlexCard> {
                                             icon: Icon(Icons.check, color: Colors.black,),
                                             iconSize: 25,
                                             onPressed: () {
-                                              Navigator.pop(context);
-                                              // if (_ufullnameController.text.isNotEmpty || _udescController.text.isNotEmpty || _umobilenumberController.text.isNotEmpty ||
-                                              //     _ulocationController.text.isNotEmpty || _uemailController.text.isNotEmpty || _uwebsiteController.text.isNotEmpty ||
-                                              //     _ufacebookController.text.isNotEmpty || _ugithubController.text.isNotEmpty || _ulinkedinController.text.isNotEmpty ||
-                                              //     _uinstagramController.text.isNotEmpty || _utwitterController.text.isNotEmpty) {
-                                              //   Firestore.instance
-                                              //       .collection("Users")
-                                              //       .document(currentUser.uid)
-                                              //       .setData({
-                                              //     "uid": currentUser.uid,
-                                              //     "fullname": _ufullnameController.text,
-                                              //     "udesc": _udescController.text,
-                                              //     "umobilenumber": _umobilenumberController.text,
-                                              //     "ulocation": _ulocationController.text,
-                                              //     "uemail": _uemailController.text,
-                                              //     "uwebsite": _uwebsiteController.text,
-                                              //     "ufacebook": _ufacebookController.text,
-                                              //     "ugithub": _ugithubController.text,
-                                              //     "ulinkedin": _ulinkedinController.text,
-                                              //     "uinstagram": _uinstagramController.text,
-                                              //     "utwitter": _utwitterController.text,
-                                              //   })
-                                              //       .then((result) => {
-                                              //     print('successfully updated'),
-                                              //     Navigator.pop(context),
-                                              //   })
-                                              //       .catchError((e) => {
-                                              //     print(e),
-                                              //     showDialog(context: context,
-                                              //         child: AlertDialog(
-                                              //           title: Text('Update something'),
-                                              //         ))
-                                              //   });
-                                              //   _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text('Profile updated successfully!')));
-                                              // }
+                                              p2p();
                                               final snackBar = SnackBar(
-                                                content: const Text('P2P transferred successfully!'),
+                                                content: Text('${umoneycontroller.text} Peer to peer transfer done successfully!'),
                                                 duration: Duration(seconds: 2, milliseconds: 500),
                                               );
                                               loading ? Loading() : ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                              Navigator.pop(context);
                                             }
                                         ),
                                       ),
@@ -348,46 +337,19 @@ class _FlexCardState extends State<FlexCard> {
                                             icon: Icon(Icons.check, color: Colors.black,),
                                             iconSize: 25,
                                             onPressed: () {
+                                              withdraw();
                                               final snackBar = SnackBar(
-                                                content: const Text('Funds withdrawed successfully!'),
+                                                content: Text('${umoneycontroller.text} points withdrawn successfully!'),
                                                 duration: Duration(seconds: 2, milliseconds: 500),
                                               );
                                               loading ? Loading() : ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                               Navigator.pop(context);
-                                              // if (_ufullnameController.text.isNotEmpty || _udescController.text.isNotEmpty || _umobilenumberController.text.isNotEmpty ||
-                                              //     _ulocationController.text.isNotEmpty || _uemailController.text.isNotEmpty || _uwebsiteController.text.isNotEmpty ||
-                                              //     _ufacebookController.text.isNotEmpty || _ugithubController.text.isNotEmpty || _ulinkedinController.text.isNotEmpty ||
-                                              //     _uinstagramController.text.isNotEmpty || _utwitterController.text.isNotEmpty) {
-                                              //   Firestore.instance
-                                              //       .collection("Users")
-                                              //       .document(currentUser.uid)
-                                              //       .setData({
-                                              //     "uid": currentUser.uid,
-                                              //     "fullname": _ufullnameController.text,
-                                              //     "udesc": _udescController.text,
-                                              //     "umobilenumber": _umobilenumberController.text,
-                                              //     "ulocation": _ulocationController.text,
-                                              //     "uemail": _uemailController.text,
-                                              //     "uwebsite": _uwebsiteController.text,
-                                              //     "ufacebook": _ufacebookController.text,
-                                              //     "ugithub": _ugithubController.text,
-                                              //     "ulinkedin": _ulinkedinController.text,
-                                              //     "uinstagram": _uinstagramController.text,
-                                              //     "utwitter": _utwitterController.text,
-                                              //   })
-                                              //       .then((result) => {
-                                              //     print('successfully updated'),
-                                              //     Navigator.pop(context),
-                                              //   })
-                                              //       .catchError((e) => {
-                                              //     print(e),
-                                              //     showDialog(context: context,
-                                              //         child: AlertDialog(
-                                              //           title: Text('Update something'),
-                                              //         ))
-                                              //   });
-                                              //   _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text('Profile updated successfully!')));
-                                              // }
+                                              /*final snackBar = SnackBar(
+                                                content: const Text('Funds withdrawed successfully!'),
+                                                duration: Duration(seconds: 2, milliseconds: 500),
+                                              );
+                                              loading ? Loading() : ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                              Navigator.pop(context);*/
                                             }
                                         ),
                                       ),

@@ -4,7 +4,6 @@ import 'package:FinPay/Loading.dart';
 import 'package:FinPay/LoginPage.dart';
 import 'package:FinPay/ThemeColor.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:FinPay/DatabaseHelper.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -57,18 +56,21 @@ class _RegisterPageState extends State<RegisterPage> {
             _umobilenoController.text.trim())
             .whenComplete((){
           if(databaseHelper.status){
-            print("DONE!!");
-            _showAgreementDialog();
+/*            print("DONE!!");
+            _showAgreementDialog();*/
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => DashboardPage(title: databaseHelper.token)));
+                    builder: (context) => DashboardPage()));
 
           }else{
-            _showDialog();
             print(databaseHelper.status);
-            msgStatus = 'Check username or password';
+            /*msgStatus = 'Check username or password';*/
             print("error!!");
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => DashboardPage()));
           }
         });
       }
